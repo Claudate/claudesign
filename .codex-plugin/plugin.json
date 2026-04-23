@@ -1,0 +1,40 @@
+{
+  "name": "claudesign",
+  "version": "0.1.0",
+  "description": "Multi-platform Claudesign design-skill bundle with validated routing and adapter-based packaging.",
+  "author": {
+    "name": "Claudate",
+    "email": "team@claudate.com",
+    "url": "https://github.com/Claudate/claudesign"
+  },
+  "homepage": "https://github.com/Claudate/claudesign",
+  "repository": "https://github.com/Claudate/claudesign",
+  "license": "UNLICENSED",
+  "keywords": [
+    "claudesign",
+    "design",
+    "skills",
+    "routing",
+    "plugin"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Claudesign",
+    "shortDescription": "Portable design skill bundle with validated routing.",
+    "longDescription": "Claudesign packages a curated design skill catalog, router contracts, and host adapters for Codex, Claude, OpenAI, and generic workflows.",
+    "developerName": "Claudate",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Claudate/claudesign",
+    "privacyPolicyURL": "https://github.com/Claudate/claudesign",
+    "termsOfServiceURL": "https://github.com/Claudate/claudesign",
+    "defaultPrompt": [
+      "List the available Claudesign adapters.",
+      "Install the Claude Claudesign bundle.",
+      "Show me the multi-platform Claudesign usage guide."
+    ],
+    "brandColor": "#175CD3"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "claudesign-plugin",
+  "version": "0.1.0",
+  "description": "Multi-platform Claudesign bundle installer for generic, Codex, Claude, and OpenAI hosts.",
+  "license": "UNLICENSED",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "claudesign-plugin": "./bin/claudesign-plugin.mjs"
+  },
+  "files": [
+    ".codex-plugin/",
+    "adapters/",
+    "agents/",
+    "bin/",
+    "core/",
+    "docs/",
+    "install.sh",
+    "LICENSE.md",
+    "README.md",
+    "scripts/",
+    "skills/"
+  ],
+  "scripts": {
+    "validate": "ruby scripts/validate_router.rb",
+    "install:generic": "node ./bin/claudesign-plugin.mjs install --adapter generic",
+    "install:claude": "node ./bin/claudesign-plugin.mjs install --adapter claude",
+    "install:openai": "node ./bin/claudesign-plugin.mjs install --adapter openai"
+  },
+  "keywords": [
+    "claudesign",
+    "plugin",
+    "design",
+    "codex",
+    "claude",
+    "openai"
+  ]
+}

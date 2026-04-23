@@ -1,6 +1,41 @@
 # claudesign
 
-`claudesign` packages the current design skill catalog, routing contracts, and validation tooling into a portable execution bundle.
+`claudesign` packages the current design skill catalog, routing contracts, and validation tooling into a portable multi-platform execution bundle.
+
+## Quick Start / 快速开始
+
+Install with `npx` after publishing to npm:
+
+发布到 npm 后，可直接通过 `npx` 安装：
+
+```bash
+npx claudesign-plugin install
+```
+
+List available adapters / 查看可用适配目标:
+
+```bash
+npx claudesign-plugin list
+```
+
+Install a specific adapter / 安装指定适配版本:
+
+```bash
+npx claudesign-plugin install --adapter claude
+npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
+```
+
+Detailed guides / 详细说明:
+
+- [English Usage Guide](docs/usage.en.md)
+- [中文使用说明](docs/usage.zh-CN.md)
+
+## Platform Support / 平台支持
+
+- `generic`: neutral adapter bundle for custom runtimes
+- `claude`: adapter bundle for Claude-oriented hosts
+- `openai`: adapter bundle for OpenAI-oriented hosts
+- `codex`: supported through `.codex-plugin/plugin.json` plus the same shared contracts
 
 ## Core Contracts
 - `skills/skill-index.yaml` is the canonical skill directory.
@@ -21,6 +56,7 @@
 - Build a portable bundle with `sh install.sh generic`, `sh install.sh claude`, or `sh install.sh openai`
 - Override the output directory with `sh install.sh <target> <output_dir>`
 - Portable bundles now include skill assets under `skills/*/SKILL.md` (plus `DESIGN.md` when present), not just metadata indexes.
+- The npm entrypoint is `bin/claudesign-plugin.mjs`, exposed as `claudesign-plugin` for `npx`.
 
 ## Validation
 - Run `ruby scripts/validate_router.rb` to verify routing structure, rejection thresholds, guarded computational cases, and execution mode mappings.
