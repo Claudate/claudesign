@@ -60,7 +60,12 @@ Detailed guides / 详细说明:
 
 ## Validation
 - Run `ruby scripts/validate_router.rb` to verify routing structure, rejection thresholds, guarded computational cases, and execution mode mappings.
+- Run `node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md` to validate bundled `DESIGN.md` artifacts when `@google/design.md` is installed or reachable through `npx`.
+- Run `node ./scripts/designmd.mjs diff ./docs/designmd-examples/taste-stitch-base.DESIGN.md ./docs/designmd-examples/taste-stitch-variant.DESIGN.md` to compare stitch-oriented revisions.
+- Run `node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md` to export design tokens for downstream implementation use.
+- Run `npx claudesign-plugin designmd spec --rules` to access the same wrapper through the package CLI.
 - Run `make validate-router` as the local shorthand.
+- Run `make designmd-lint`, `make designmd-diff-sample`, or `make designmd-export-tailwind` for local DESIGN.md workflows.
 - Machine-readable cases live in `agents/router-validation-cases.yaml`.
 - GitHub Actions entrypoint lives at `.github/workflows/router-validation.yml`.
 

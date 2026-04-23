@@ -23,6 +23,11 @@
   ],
   "scripts": {
     "validate": "ruby scripts/validate_router.rb",
+    "designmd:lint": "node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md",
+    "designmd:spec": "node ./scripts/designmd.mjs spec --rules",
+    "designmd:diff:sample": "node ./scripts/designmd.mjs diff ./docs/designmd-examples/taste-stitch-base.DESIGN.md ./docs/designmd-examples/taste-stitch-variant.DESIGN.md",
+    "designmd:export:tailwind": "node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md",
+    "designmd:export:dtcg": "node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md",
     "install:generic": "node ./bin/claudesign-plugin.mjs install --adapter generic",
     "install:claude": "node ./bin/claudesign-plugin.mjs install --adapter claude",
     "install:openai": "node ./bin/claudesign-plugin.mjs install --adapter openai"

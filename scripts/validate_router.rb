@@ -8,6 +8,8 @@ ROUTER_MAP_PATH = File.join(ROOT, "agents", "router-map.yaml")
 SKILL_INDEX_PATH = File.join(ROOT, "skills", "skill-index.yaml")
 CASE_PATH = File.join(ROOT, "agents", "router-validation-cases.yaml")
 SKILL_DOC_GLOB = File.join(ROOT, "skills", "*", "SKILL.md")
+DESIGN_DOC_GLOB = File.join(ROOT, "skills", "*", "DESIGN.md")
+DESIGN_SAMPLE_GLOB = File.join(ROOT, "docs", "designmd-examples", "*.DESIGN.md")
 
 def load_yaml(path)
   YAML.load_file(path)
@@ -103,6 +105,25 @@ def validate_skill_doc_frontmatter
 
     if frontmatter["description"].to_s.strip.empty?
       errors << "Skill doc #{path} frontmatter is missing description"
+    end
+  end
+
+  errors
+end
+
+def validate_design_doc_frontmatter
+  errors = []
+  files = (Dir.glob(DESIGN_DOC_GLOB) + Dir.glob(DESIGN_SAMPLE_GLOB)).sort
+
+  files.each do |path|
+    frontmatter = parse_frontmatter(path)
+    if frontmatter.nil?
+      errors << "Design doc #{path} is missing YAML frontmatter"
+      next
+    end
+
+    if frontmatter["name"].to_s.strip.empty?
+      errors << "Design doc #{path} frontmatter is missing name"
     end
   end
 
@@ -258,6 +279,7 @@ def validate_structure(router_map, skills_by_id)
   end
 
   errors.concat(validate_skill_doc_frontmatter)
+  errors.concat(validate_design_doc_frontmatter)
 
   errors
 end

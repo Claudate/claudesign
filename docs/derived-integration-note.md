@@ -16,6 +16,8 @@ The goal of the current structure is to keep routing behavior explicit, packagin
 - `agents/router-map.yaml`: canonical routing model, synonym groups, fallback rules, and execution chains
 - `agents/router-validation-cases.yaml`: machine-readable routing and guard cases
 - `scripts/validate_router.rb`: validation entrypoint for local runs and CI
+- `scripts/designmd.mjs`: optional wrapper around Google Labs `@google/design.md` for lint/diff/export/spec workflows
+- `docs/designmd-examples/*.DESIGN.md`: sample stitch-oriented artifacts for diff and export demonstrations
 
 ## Execution Contract
 
@@ -75,7 +77,15 @@ Computational outputs remain guarded. Missing-input checks, reference-mode discl
 
 - `install.sh` builds portable directory bundles for `generic`, `claude`, and `openai`.
 - Generated bundles are build artifacts and are not source-controlled in this repository.
-- Bundles include the skill docs, router files, validation script, and selected top-level docs needed by downstream hosts.
+- Bundles include the skill docs, router files, validation scripts, and selected top-level docs needed by downstream hosts.
+
+## DESIGN.md Integration Notes
+
+- `claudesign` remains the source of truth for routing, execution modes, and host adapters.
+- `DESIGN.md` is an optional artifact and validation target for `design-spec` style outputs, especially `taste.stitch`.
+- The repository includes example before/after stitch artifacts for local `diff` workflows and downstream smoke tests.
+- The repository wrapper targets Google Labs `@google/design.md`, which remained marked `alpha` on 2026-04-23.
+- Repository validation only enforces local structural presence for bundled `DESIGN.md` files; semantic linting is delegated to the upstream CLI when available.
 
 ## Documentation Policy
 

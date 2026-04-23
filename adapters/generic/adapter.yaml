@@ -16,8 +16,10 @@ install_contract:
 
 entrypoints:
   validation_command: ruby scripts/validate_router.rb
+  designmd_command: node scripts/designmd.mjs
   local_shortcut: make validate-router
 
 notes:
   - Use this adapter when the target platform can consume files and YAML contracts directly.
   - Platform-specific execution should bind to `execution_mode` and `execution_chain`.
+  - When `@google/design.md` is available, use `node scripts/designmd.mjs` for lint/diff/export/spec workflows.

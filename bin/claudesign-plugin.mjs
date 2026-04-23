@@ -10,6 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const installScript = path.join(repoRoot, "install.sh");
+const designmdScript = path.join(repoRoot, "scripts", "designmd.mjs");
 const supportedAdapters = ["generic", "claude", "openai"];
 
 function printHelp() {
@@ -18,6 +19,7 @@ function printHelp() {
 Usage:
   npx claudesign-plugin list
   npx claudesign-plugin install [--adapter <generic|claude|openai>] [--platform <generic|claude|openai>] [--target <dir>]
+  npx claudesign-plugin designmd <lint|diff|export|spec> [args...]
   npx claudesign-plugin help
 
 Examples:
@@ -26,6 +28,7 @@ Examples:
   npx claudesign-plugin install --adapter claude
   npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
   npx claudesign-plugin install --platform claude
+  npx claudesign-plugin designmd lint ./skills/visual-style/DESIGN.md
 `);
 }
 
@@ -39,6 +42,10 @@ function expandHome(inputPath) {
 function parseArgs(argv) {
   const [first = "help", ...rest] = argv;
   const command = first === "--help" || first === "-h" ? "help" : first;
+  if (command === "designmd") {
+    return { command, options: {}, passthrough: rest };
+  }
+
   const options = {};
 
   for (let index = 0; index < rest.length; index += 1) {
@@ -70,7 +77,7 @@ function parseArgs(argv) {
     throw new Error(`Unknown argument: ${token}`);
   }
 
-  return { command, options };
+  return { command, options, passthrough: [] };
 }
 
 function runInstall(adapter, target) {
@@ -93,6 +100,21 @@ function runInstall(adapter, target) {
   console.log(`\nInstalled '${adapter}' bundle to: ${resolvedTarget}`);
 }
 
+function runDesignmd(args) {
+  if (!existsSync(designmdScript)) {
+    throw new Error("scripts/designmd.mjs is missing from the package.");
+  }
+
+  try {
+    execFileSync("node", [designmdScript, ...args], {
+      cwd: repoRoot,
+      stdio: "inherit"
+    });
+  } catch (error) {
+    process.exit(error.status ?? 1);
+  }
+}
+
 function main() {
   let parsed;
 
@@ -105,7 +127,7 @@ function main() {
     process.exit(1);
   }
 
-  const { command, options } = parsed;
+  const { command, options, passthrough } = parsed;
 
   if (options.help || command === "help") {
     printHelp();
@@ -119,6 +141,11 @@ function main() {
 
   if (command === "install") {
     runInstall(options.adapter || "generic", options.target);
+    return;
+  }
+
+  if (command === "designmd") {
+    runDesignmd(passthrough);
     return;
   }
 

@@ -7,6 +7,7 @@ contracts:
   router_source: agents/router-map.yaml
   validation_cases: agents/router-validation-cases.yaml
   validation_script: scripts/validate_router.rb
+  designmd_wrapper: scripts/designmd.mjs
 
 execution_model:
   canonical_brand: claudesign
@@ -21,6 +22,9 @@ execution_model:
 package_contents:
   - skills/
   - agents/
+  - docs/designmd-examples/
+  - docs/designmd-workflows.md
+  - scripts/designmd.mjs
   - scripts/validate_router.rb
   - LICENSE.md
   - README.md

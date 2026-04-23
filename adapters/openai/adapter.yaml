@@ -15,6 +15,7 @@ install_contract:
 
 entrypoints:
   validation_command: ruby scripts/validate_router.rb
+  designmd_command: node scripts/designmd.mjs
   local_shortcut: make validate-router
 
 compatibility:
@@ -27,3 +28,4 @@ notes:
   - This adapter is a packaging layer for OpenAI-oriented host runtimes.
   - Core routing semantics still come from `skills/skill-index.yaml` and `agents/router-map.yaml`.
   - Platform execution should bind to `execution_mode`, `execution_chain`, and guard rules without renaming canonical skill IDs.
+  - DESIGN.md validation/export remains optional and is exposed through `node scripts/designmd.mjs`.

@@ -13,6 +13,7 @@ install_contract:
 
 entrypoints:
   validation_command: ruby scripts/validate_router.rb
+  designmd_command: node scripts/designmd.mjs
   local_shortcut: make validate-router
 
 compatibility:
@@ -23,3 +24,4 @@ compatibility:
 notes:
   - This adapter exists for compatibility packaging only.
   - The core contracts remain platform-neutral even when this adapter is used.
+  - DESIGN.md validation/export remains optional and is exposed through `node scripts/designmd.mjs`.

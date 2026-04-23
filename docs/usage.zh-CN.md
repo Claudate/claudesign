@@ -72,6 +72,35 @@ node ./bin/claudesign-plugin.mjs install --adapter generic --target /tmp/claudes
 ruby scripts/validate_router.rb
 ```
 
+如需校验仓库内置的 `DESIGN.md` 示例，可以运行：
+
+```bash
+node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
+```
+
+如需导出给下游实现层使用的 token：
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
+node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
+```
+
+如需直接跑仓库内置的 `taste.stitch` 对比样例：
+
+```bash
+node ./scripts/designmd.mjs diff \
+  ./docs/designmd-examples/taste-stitch-base.DESIGN.md \
+  ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
+```
+
+这个包装脚本会优先使用本地或全局安装的 `designmd`，找不到时再回退到 `npx @google/design.md`。截至 2026-04-23，上游 `DESIGN.md` 规范仍处于 alpha 阶段。
+
+如果你使用发布后的包 CLI，也可以直接这样调用同一套包装能力：
+
+```bash
+npx claudesign-plugin designmd spec --rules
+```
+
 ## 安装后的内容
 
 每次安装生成的 bundle 会包含：
@@ -80,5 +109,7 @@ ruby scripts/validate_router.rb
 - 路由契约
 - 校验用例
 - 校验脚本
+- 可选的 `DESIGN.md` 命令包装脚本
+- 内置的 `DESIGN.md` diff 样例
 - README 和部分文档
 - 当前适配目标对应的元数据文件
