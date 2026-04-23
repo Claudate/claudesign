@@ -1,0 +1,158 @@
+version: 1
+last_updated: 2026-04-23
+
+routing_cases:
+  - id: R1
+    prompt: 帮我做登录页层级布局
+    expected_agent: agent.web-design
+    expected_mode: prototype
+  - id: R2
+    prompt: 组件 hover/focus/loading 状态规范
+    expected_agent: agent.web-design
+    expected_mode: animation
+  - id: R3
+    prompt: 设计系统 token 盘点
+    expected_agent: agent.design-system
+    expected_mode: analysis
+  - id: R4
+    prompt: 检查设计系统视觉漂移和一致性
+    expected_agent: agent.design-system
+    expected_mode: critique
+  - id: R5
+    prompt: 画一个审批流程图和决策树
+    expected_agent: agent.diagram-design
+    expected_mode: slides
+  - id: R6
+    prompt: 优化流程图的分支逻辑决策树
+    expected_agent: agent.diagram-design
+    expected_mode: slides
+  - id: R7
+    prompt: 做场地日照与气候分析
+    expected_agent: agent.comp-design
+    expected_mode: analysis
+  - id: R8
+    prompt: 做概念阶段荷载估算并评估可持续性
+    expected_agent: agent.comp-design
+    expected_mode: analysis
+  - id: R11
+    prompt: 帮我做自适应布局检查
+    expected_agent: agent.web-design
+    expected_mode: critique
+  - id: R12
+    prompt: 做一轮视觉规范漂移检查
+    expected_agent: agent.design-system
+    expected_mode: critique
+  - id: R13
+    prompt: 给我一个业务流程的决策树
+    expected_agent: agent.diagram-design
+    expected_mode: slides
+  - id: R14
+    prompt: 做建筑负荷计算并加一轮气候研究建议
+    expected_agent: agent.comp-design
+    expected_mode: analysis
+  - id: V1
+    prompt: 这个项目请走 image-first，先生成页面参考图再实现
+    expected_agent: agent.visual-style
+    expected_mode: image-first
+  - id: V2
+    prompt: 现有官网需要 redesign，先审计再给升级方案
+    expected_agent: agent.visual-style
+    expected_mode: style-redesign
+  - id: V3
+    prompt: 做一个 minimalist 风格的产品着陆页
+    expected_agent: agent.visual-style
+    expected_mode: design-spec
+  - id: V4
+    prompt: 给我一个 brutalist 工业风的营销页视觉方案
+    expected_agent: agent.visual-style
+    expected_mode: design-spec
+  - id: V5
+    prompt: 做 soft ui 方向，强调高级感和柔和对比
+    expected_agent: agent.visual-style
+    expected_mode: design-spec
+  - id: V6
+    prompt: 输出 stitch design 的 DESIGN.md 规范
+    expected_agent: agent.visual-style
+    expected_mode: design-spec
+  - id: V7
+    prompt: 这次要 output enforcement，禁止 TODO 和省略代码
+    expected_agent: agent.visual-style
+    expected_mode: design-spec
+  - id: V8
+    prompt: 用 style profile 做 landing page，高保真可交付
+    expected_agent: agent.visual-style
+    expected_mode: design-spec
+  - id: V9
+    prompt: 按图实现首页，先出图再做前端落地
+    expected_agent: agent.visual-style
+    expected_mode: image-first
+  - id: V10
+    prompt: 视觉任务请 image-first，并在图不可用时给降级说明
+    expected_agent: agent.visual-style
+    expected_mode: image-first
+
+rejection_cases:
+  - id: R15
+    prompt: 漂移检查
+  - id: R16
+    prompt: 流程图
+  - id: R17
+    prompt: 日照分析
+  - id: VR1
+    prompt: 风格
+  - id: VR2
+    prompt: 图片
+  - id: VR3
+    prompt: 输出完整
+
+guard_cases:
+  - id: G1
+    prompt: 想做计算设计但没有气候和几何输入
+    expected_agent: agent.comp-design
+    expected_guard_label: "[Reference Mode]"
+  - id: G2
+    prompt: 给我一个最终日照优化方案
+    expected_agent: agent.comp-design
+    expected_guard_label: "[Reference Mode]"
+
+execution_mode_cases:
+  - id: H1
+    prompt: 给我一个登录页原型结构和区块层级
+    expected_agent: agent.web-design
+    expected_mode: prototype
+  - id: H2
+    prompt: 把营销页做成可交付的高保真 HTML 设计稿
+    expected_agent: agent.web-design
+    expected_mode: html-design
+  - id: H3
+    prompt: 补齐 hover、focus、loading 的动效与状态过渡
+    expected_agent: agent.web-design
+    expected_mode: animation
+  - id: H4
+    prompt: 审一轮设计系统 token、一致性和可访问性问题
+    expected_agent: agent.design-system
+    expected_mode: critique
+  - id: H5
+    prompt: 把这个审批链路整理成汇报用流程页
+    expected_agent: agent.diagram-design
+    expected_mode: slides
+  - id: H6
+    prompt: 基于场地朝向和气候条件给我做概念阶段分析
+    expected_agent: agent.comp-design
+    expected_mode: analysis
+  - id: VH1
+    prompt: 这个视觉需求走 image first 工作流
+    expected_agent: agent.visual-style
+    expected_mode: image-first
+  - id: VH2
+    prompt: 旧页面做 redesign 升级，不要重写框架
+    expected_agent: agent.visual-style
+    expected_mode: style-redesign
+  - id: VH3
+    prompt: 需要 stitch design 规范输出，不要普通代码稿
+    expected_agent: agent.visual-style
+    expected_mode: design-spec
+  - id: VH4
+    prompt: 用 minimalist 风格做一版视觉规范
+    expected_agent: agent.visual-style
+    expected_mode: design-spec

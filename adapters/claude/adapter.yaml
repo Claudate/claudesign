@@ -1,0 +1,25 @@
+version: 1
+adapter_id: claude
+display_name: claudesign Compatibility Adapter for Claude Hosts
+last_updated: 2026-04-23
+
+install_contract:
+  package_format: directory-bundle
+  core_manifest: core/manifest.yaml
+  required_files:
+    - skills/skill-index.yaml
+    - agents/router-map.yaml
+    - agents/router-validation-cases.yaml
+
+entrypoints:
+  validation_command: ruby scripts/validate_router.rb
+  local_shortcut: make validate-router
+
+compatibility:
+  preserves_brand: claudesign
+  preserves_existing_skill_layout: true
+  preserves_existing_router_layout: true
+
+notes:
+  - This adapter exists for compatibility packaging only.
+  - The core contracts remain platform-neutral even when this adapter is used.

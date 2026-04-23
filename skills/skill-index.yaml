@@ -1,0 +1,786 @@
+version: 1
+owner: dbi007
+last_updated: 2026-04-23
+integration_profile: claudesign-core-v1
+
+categories:
+  - id: web-ui
+    name: Web and UI Design
+  - id: visual-style
+    name: Visual Style and Art Direction
+  - id: design-system
+    name: Design System and Visual Language
+  - id: ux-adjacent
+    name: UX Adjacent
+  - id: diagram-flow
+    name: Diagram and Flow Design
+  - id: computational-design
+    name: Computational Design
+
+skills:
+  - id: web.interface-design-core
+    name: Interface Design Core
+    category: web-ui
+    source_repo: https://github.com/Dammyjay93/interface-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: html-design
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    agent_entrypoints:
+      - agent.web-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - UI consistency workflows
+      - interface quality checkpoints
+    out_of_scope:
+      - backend and deployment implementation
+
+  - id: web.layout-hierarchy
+    name: Layout Hierarchy
+    category: web-ui
+    source_repo: https://github.com/Dammyjay93/interface-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: prototype
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: web.interface-design-core
+    agent_entrypoints:
+      - agent.web-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - page-level hierarchy and layout structure
+      - information priority and section grouping
+    out_of_scope:
+      - backend and deployment implementation
+
+  - id: web.state-spec
+    name: UI State Specification
+    category: web-ui
+    source_repo: https://github.com/Dammyjay93/interface-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: animation
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: web.interface-design-core
+    agent_entrypoints:
+      - agent.web-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - component interaction states and behavior contracts
+      - state matrix for handoff quality
+      - motion and transition expectations per interactive state
+    out_of_scope:
+      - frontend code implementation
+
+  - id: web.responsive-qa
+    name: Responsive QA
+    category: web-ui
+    source_repo: https://github.com/Dammyjay93/interface-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: critique
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: web.interface-design-core
+    agent_entrypoints:
+      - agent.web-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - responsive behavior checks and fix direction
+      - breakpoint-level defect prioritization
+      - breakpoint behavior matrix for developer handoff
+    out_of_scope:
+      - automated test framework implementation
+
+  - id: taste.taste-core
+    name: Taste Core
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: image-first
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    style_profile: balanced-premium
+    dial_defaults:
+      variance: 8
+      motion: 6
+      density: 4
+    workflow_policy:
+      image_first: required
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+      - agent.web-design
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - high-agency premium frontend direction
+      - anti-slop layout and state constraints
+      - style dial driven execution
+    out_of_scope:
+      - backend and deployment implementation
+
+  - id: taste.gpt-taste
+    name: GPT Taste Variant
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: design-spec
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: taste.taste-core
+    style_profile: high-variance-gpt
+    dial_defaults:
+      variance: 9
+      motion: 8
+      density: 4
+    workflow_policy:
+      image_first: optional
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - deterministic high-variance layout planning
+      - premium typography and motion strictness
+    out_of_scope:
+      - non-frontend runtime optimization
+
+  - id: taste.images-taste
+    name: Image-First Taste
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: image-first
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: taste.taste-core
+    style_profile: image-led-premium
+    dial_defaults:
+      variance: 8
+      motion: 6
+      density: 4
+    workflow_policy:
+      image_first: required
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+      - agent.web-design
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - generate image references before coding
+      - section-level visual extraction and mapping
+    out_of_scope:
+      - non-visual backend workflows
+
+  - id: taste.redesign
+    name: Redesign Skill
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: style-redesign
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: taste.taste-core
+    style_profile: redesign-upgrade
+    workflow_policy:
+      image_first: optional
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+      - agent.web-design
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - redesign audit and targeted upgrades
+      - anti-generic pattern remediation
+    out_of_scope:
+      - framework migrations
+
+  - id: taste.soft
+    name: Soft Skill
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: design-spec
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: taste.taste-core
+    style_profile: soft-premium
+    dial_defaults:
+      variance: 6
+      motion: 5
+      density: 3
+    workflow_policy:
+      image_first: optional
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - calm premium visual language
+      - soft contrast and whitespace-driven hierarchy
+    out_of_scope:
+      - non-design product strategy
+
+  - id: taste.minimalist
+    name: Minimalist Skill
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: design-spec
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: taste.taste-core
+    style_profile: editorial-minimal
+    dial_defaults:
+      variance: 5
+      motion: 3
+      density: 4
+    workflow_policy:
+      image_first: optional
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - clean editorial interfaces
+      - restrained monochrome visual systems
+    out_of_scope:
+      - high-density data visual coding
+
+  - id: taste.brutalist
+    name: Brutalist Skill
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: design-spec
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: taste.taste-core
+    style_profile: industrial-brutalist
+    dial_defaults:
+      variance: 8
+      motion: 2
+      density: 7
+    workflow_policy:
+      image_first: optional
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - industrial and mechanical interface language
+      - rigid grid and utilitarian color systems
+    out_of_scope:
+      - consumer-style soft visual output
+
+  - id: taste.stitch
+    name: Stitch Design Taste
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: design-spec
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: taste.taste-core
+    style_profile: stitch-semantic
+    workflow_policy:
+      image_first: optional
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+      - agent.design-system
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - stitch-compatible semantic DESIGN.md generation
+      - anti-pattern encoded design policy
+    out_of_scope:
+      - runtime app code generation
+
+  - id: taste.output-enforcement
+    name: Output Enforcement
+    category: visual-style
+    source_repo: https://github.com/Leonxlnx/taste-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: design-spec
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: taste.taste-core
+    style_profile: output-completeness
+    workflow_policy:
+      image_first: optional
+      fallback_when_image_generation_unavailable: text-first-with-risk-note
+    agent_entrypoints:
+      - agent.visual-style
+      - agent.web-design
+    last_reviewed: 2026-04-23
+    review_cycle: monthly
+    in_scope:
+      - full-output enforcement without placeholder truncation
+      - scoped completeness verification
+    out_of_scope:
+      - domain-specific business policy decisions
+
+  - id: system.signature-visual-language
+    name: Signature Visual Language
+    category: design-system
+    source_repo: https://github.com/dominikmartn/nothing-design-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: html-design
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    agent_entrypoints:
+      - agent.design-system
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - style language and visual direction
+      - system-level UI patterns
+    out_of_scope:
+      - non-design engineering automation
+
+  - id: system.token-audit
+    name: Token Audit
+    category: design-system
+    source_repo: https://github.com/dominikmartn/nothing-design-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: system.signature-visual-language
+    agent_entrypoints:
+      - agent.design-system
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - token inventory and normalization recommendations
+      - token naming and deprecation strategy
+    out_of_scope:
+      - design token runtime integration
+
+  - id: system.component-ruleset
+    name: Component Ruleset
+    category: design-system
+    source_repo: https://github.com/dominikmartn/nothing-design-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: html-design
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: system.signature-visual-language
+    agent_entrypoints:
+      - agent.design-system
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - component anatomy, variants, and state conventions
+      - component usage rules and anti-patterns
+      - css architecture layering constraints for implementation consistency
+    out_of_scope:
+      - framework-specific component coding
+
+  - id: system.visual-drift-review
+    name: Visual Drift Review
+    category: design-system
+    source_repo: https://github.com/rohitg00/awesome-claude-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: critique
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: system.signature-visual-language
+    agent_entrypoints:
+      - agent.design-system
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - system drift detection across screens
+      - fix prioritization for design consistency
+    out_of_scope:
+      - QA automation implementation
+
+  - id: ux.review-suite
+    name: UX Review Suite
+    category: ux-adjacent
+    source_repo: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: critique
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    agent_entrypoints:
+      - agent.web-design
+      - agent.design-system
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - ux quality and usability guidance
+      - accessibility and responsive principles
+    out_of_scope:
+      - CI and infrastructure-only workflows
+
+  - id: ux.ux-friction-scan
+    name: UX Friction Scan
+    category: ux-adjacent
+    source_repo: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: critique
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: ux.review-suite
+    agent_entrypoints:
+      - agent.web-design
+      - agent.design-system
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - user-flow friction detection and prioritization
+      - task-level usability issue mapping
+    out_of_scope:
+      - formal user research program management
+
+  - id: ux.a11y-light-audit
+    name: Accessibility Light Audit
+    category: ux-adjacent
+    source_repo: https://github.com/mustafakendiguzel/claude-code-ui-agents
+    retention_mode: partial
+    status: curated-v1
+    type: executable
+    execution_mode: critique
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: ux.review-suite
+    agent_entrypoints:
+      - agent.web-design
+      - agent.design-system
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - quick accessibility checks for critical flows
+      - remediation guidance for common a11y gaps
+    out_of_scope:
+      - full accessibility compliance certification
+
+  - id: ux.flow-clarity-pass
+    name: Flow Clarity Pass
+    category: ux-adjacent
+    source_repo: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: critique
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: ux.review-suite
+    agent_entrypoints:
+      - agent.web-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - flow naming, labeling, and IA clarity checks
+      - ambiguity reduction for critical user paths
+    out_of_scope:
+      - production copywriting operations
+
+  - id: library.curated-design-reference
+    name: Curated Design Reference Index
+    category: design-system
+    source_repo: https://github.com/rohitg00/awesome-claude-design
+    retention_mode: keep
+    status: reference-index
+    type: reference
+    execution_mode: reference-only
+    execution_bridge_status: reference-only
+    curation_tier: core
+    agent_entrypoints:
+      - agent.design-system
+      - agent.web-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - design reference discovery
+      - upstream skill/resource lookup
+    out_of_scope:
+      - direct implementation templates without curation
+
+  - id: diagram.diagram-design-core
+    name: Diagram Design Core
+    category: diagram-flow
+    source_repo: https://github.com/cathrynlavery/diagram-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: slides
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    agent_entrypoints:
+      - agent.diagram-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - flowchart structure and visual hierarchy
+      - diagram communication clarity
+    out_of_scope:
+      - product code generation
+
+  - id: diagram.flow-skeleton
+    name: Flow Skeleton
+    category: diagram-flow
+    source_repo: https://github.com/cathrynlavery/diagram-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: slides
+    execution_bridge_status: bridge-ready
+    curation_tier: core
+    canonical_id: diagram.diagram-design-core
+    agent_entrypoints:
+      - agent.diagram-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - baseline node and connector construction
+      - start/end and transition definition
+    out_of_scope:
+      - runtime system implementation
+
+  - id: diagram.branch-logic-normalize
+    name: Branch Logic Normalize
+    category: diagram-flow
+    source_repo: https://github.com/cathrynlavery/diagram-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: slides
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: diagram.diagram-design-core
+    agent_entrypoints:
+      - agent.diagram-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - decision branch cleanup and normalization
+      - branching criteria clarity
+    out_of_scope:
+      - business rule engine implementation
+
+  - id: diagram.diagram-clarity-check
+    name: Diagram Clarity Check
+    category: diagram-flow
+    source_repo: https://github.com/cathrynlavery/diagram-design
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: critique
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: diagram.diagram-design-core
+    agent_entrypoints:
+      - agent.diagram-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - readability and hierarchy quality checks
+      - final diagram polish recommendations
+    out_of_scope:
+      - visual rendering automation
+
+  - id: comp.computational-design-suite
+    name: Computational Design Suite
+    category: computational-design
+    source_repo: https://github.com/Amanbh997/Claude-skills-for-Computational-Designers
+    retention_mode: keep-exception-full
+    status: curated-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: guarded
+    curation_tier: core
+    agent_entrypoints:
+      - agent.comp-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - computational design workflows
+      - calculator-driven design support
+    out_of_scope:
+      - non-design business automation
+
+  - id: comp.workflow-calculator
+    name: Computational Design Workflow Calculator
+    category: computational-design
+    source_repo: https://github.com/Amanbh997/Claude-skills-for-Computational-Designers
+    retention_mode: keep-exception-full
+    status: retained-unpacked-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: guarded
+    curation_tier: support
+    canonical_id: comp.computational-design-suite
+    agent_entrypoints:
+      - agent.comp-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - workflow-time and effort estimation
+      - design-process decision support
+    out_of_scope:
+      - non-design project management
+
+  - id: comp.climate-analysis
+    name: Climate Analysis
+    category: computational-design
+    source_repo: https://github.com/Amanbh997/Claude-skills-for-Computational-Designers
+    retention_mode: keep-exception-full
+    status: retained-unpacked-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: guarded
+    curation_tier: support
+    canonical_id: comp.computational-design-suite
+    agent_entrypoints:
+      - agent.comp-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - climate-driven design evaluation
+    out_of_scope:
+      - legal compliance sign-off
+
+  - id: comp.site-solar-analysis
+    name: Site and Solar Analysis
+    category: computational-design
+    source_repo: https://github.com/Amanbh997/Claude-skills-for-Computational-Designers
+    retention_mode: keep-exception-full
+    status: retained-unpacked-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: guarded
+    curation_tier: core
+    canonical_id: comp.computational-design-suite
+    agent_entrypoints:
+      - agent.comp-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - site context and solar logic
+    out_of_scope:
+      - permit-ready simulation documents
+
+  - id: comp.building-load-calculations
+    name: Building Load Calculations
+    category: computational-design
+    source_repo: https://github.com/Amanbh997/Claude-skills-for-Computational-Designers
+    retention_mode: keep-exception-full
+    status: retained-unpacked-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: guarded
+    curation_tier: support
+    canonical_id: comp.computational-design-suite
+    agent_entrypoints:
+      - agent.comp-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - early-stage load estimate support
+    out_of_scope:
+      - stamped engineering calculations
+
+  - id: comp.lifecycle-sustainability
+    name: Lifecycle Analysis and Sustainability
+    category: computational-design
+    source_repo: https://github.com/Amanbh997/Claude-skills-for-Computational-Designers
+    retention_mode: keep-exception-full
+    status: retained-unpacked-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: guarded
+    curation_tier: support
+    canonical_id: comp.computational-design-suite
+    agent_entrypoints:
+      - agent.comp-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - sustainability-oriented design tradeoff review
+    out_of_scope:
+      - certification issuance
+
+  - id: comp.accessibility-code-compliance
+    name: Accessibility and Code Compliance
+    category: computational-design
+    source_repo: https://github.com/Amanbh997/Claude-skills-for-Computational-Designers
+    retention_mode: keep-exception-full
+    status: retained-unpacked-v1
+    type: executable
+    execution_mode: analysis
+    execution_bridge_status: guarded
+    curation_tier: support
+    canonical_id: comp.computational-design-suite
+    agent_entrypoints:
+      - agent.comp-design
+    last_reviewed: 2026-04-21
+    review_cycle: monthly
+    in_scope:
+      - accessibility and code-aware design checks
+    out_of_scope:
+      - formal jurisdictional approval
+
+cleanup_records:
+  - source_repo: https://github.com/mustafakendiguzel/claude-code-ui-agents
+    retention_mode: partial
+    keep_domains:
+      - ui design
+      - ux methods
+      - information architecture
+    clean_domains:
+      - backend-only logic
+      - deployment-only scripts
+      - ci-cd-only setup
+    rationale: mixed repository aligned by design-first policy

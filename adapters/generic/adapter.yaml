@@ -1,0 +1,23 @@
+version: 1
+adapter_id: generic
+display_name: claudesign Generic Adapter
+last_updated: 2026-04-23
+
+install_contract:
+  package_format: directory-bundle
+  core_manifest: core/manifest.yaml
+  required_files:
+    - skills/skill-index.yaml
+    - agents/router-map.yaml
+    - agents/router-validation-cases.yaml
+  optional_docs:
+    - docs/prompt-mapping-samples.md
+    - docs/derived-integration-note.md
+
+entrypoints:
+  validation_command: ruby scripts/validate_router.rb
+  local_shortcut: make validate-router
+
+notes:
+  - Use this adapter when the target platform can consume files and YAML contracts directly.
+  - Platform-specific execution should bind to `execution_mode` and `execution_chain`.

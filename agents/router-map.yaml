@@ -1,0 +1,544 @@
+version: 1
+last_updated: 2026-04-23
+curation_profile: curated-core-v1
+integration_profile: claudesign-core-v1
+fallback_policy:
+  order:
+    - same-category-preferred-skills
+    - cross-category-reference-skills
+  notes:
+    - fallback should prefer executable skills before reference skills
+    - if no fallback exists, return explicit no-match and request clarification
+    - for computational-design, cross-category fallback must be guarded with domain checks
+    - guarded fallback must declare reference mode and request missing critical inputs
+site_replication_policy:
+  mode: quality-first-high-fidelity
+  allowed_scope:
+    - visual
+    - interaction
+    - information_hierarchy
+  prohibited_scope:
+    - unauthorized_brand_assets
+    - copyrighted_text_or_media
+    - restricted_source_code_copy
+  anti_ai_look_rules:
+    - avoid template-like hero repetition across pages
+    - avoid repetitive same-shape card rhythm without hierarchy
+    - enforce intentional whitespace and typographic contrast
+    - forbid placeholder truncation patterns such as ellipsis-only code
+
+shared_quality_gates:
+  anti-slop-core:
+    scope:
+      - agent.web-design
+      - agent.visual-style
+    checks:
+      - avoid_template_hero_repetition
+      - avoid_repetitive_card_rhythm_without_hierarchy
+      - enforce_intentional_whitespace_and_typographic_contrast
+      - enforce_loading_empty_error_focus_active_state_coverage
+  output-enforcement:
+    scope:
+      - agent.web-design
+      - agent.visual-style
+    banned_placeholder_patterns:
+      - "..."
+      - "TODO"
+      - "rest of code"
+      - "continue pattern"
+      - "implement here"
+    completion_contract:
+      - no_placeholder_shortcuts
+      - no_partial_skeleton_when_full_output_requested
+      - enforce_clean_pause_marker_if_token_limited
+execution_bridge:
+  enabled: true
+  runtime: claudesign
+  route_pipeline:
+    - intent_normalization
+    - agent_match
+    - execution_mode_resolution
+    - reference_doc_routing
+  mode_catalog:
+    prototype:
+      description: fast structural prototype output for page and flow concepts
+    slides:
+      description: presentation-friendly diagram and storyboard output
+    animation:
+      description: motion and state-transition oriented output
+    critique:
+      description: review-first output for audits, drift checks, and a11y findings
+    html-design:
+      description: high-fidelity page and component specification output
+    analysis:
+      description: quantified or research-like output with explicit assumptions
+    image-first:
+      description: generate visual reference first, then analyze and implement with explicit degradation policy
+    style-redesign:
+      description: audit-first visual redesign output with stack-compatible upgrade strategy
+    design-spec:
+      description: style profile rules and semantic design specification output
+
+intent_normalization:
+  enabled: true
+  normalization:
+    - lowercase
+    - trim
+    - collapse-whitespace
+  synonym_groups:
+    web-ui:
+      - canonical: responsive
+        aliases:
+          - mobile first
+          - adaptive layout
+          - breakpoint
+          - 响应式
+          - 自适应
+          - 自适应布局
+      - canonical: component state
+        aliases:
+          - interaction state
+          - hover focus active
+          - hover
+          - focus
+          - loading
+          - motion
+          - animation
+          - 状态规范
+          - 交互状态
+          - 动效
+          - 状态过渡
+      - canonical: interface layout
+        aliases:
+          - page layout
+          - screen hierarchy
+          - layout
+          - hierarchy
+          - prototype structure
+          - 界面布局
+          - 布局
+          - 层级
+          - 页面层级
+          - 原型结构
+          - 区块层级
+      - canonical: prototype
+        aliases:
+          - wireframe
+          - low fidelity
+          - 原型
+          - 线框
+      - canonical: html design
+        aliases:
+          - html mockup
+          - high fidelity html
+          - 高保真 html
+          - html 设计稿
+          - 高保真设计稿
+    visual-style:
+      - canonical: image-first
+        aliases:
+          - image first
+          - image-driven
+          - 按图实现
+          - 先出图再实现
+          - 先生成图
+      - canonical: redesign
+        aliases:
+          - revamp
+          - ui upgrade
+          - 改版
+          - 重设计
+          - 界面重做
+      - canonical: style profile
+        aliases:
+          - visual style
+          - art direction
+          - 风格化
+          - 视觉风格
+          - 风格档
+      - canonical: minimalist
+        aliases:
+          - editorial minimal
+          - 极简
+          - 侘寂
+      - canonical: brutalist
+        aliases:
+          - industrial ui
+          - 野兽派
+          - 工业风
+      - canonical: soft ui
+        aliases:
+          - soft
+          - 柔和风格
+          - 高级柔和
+      - canonical: stitch design
+        aliases:
+          - stitch
+          - design md
+          - 设计规范导出
+      - canonical: output enforcement
+        aliases:
+          - full output
+          - no placeholder
+          - 禁止省略
+          - 不要偷懒
+    design-system:
+      - canonical: design system
+        aliases:
+          - ds
+          - style guide
+          - 设计系统
+          - 视觉规范
+      - canonical: token
+        aliases:
+          - design token
+          - color type spacing
+          - 变量体系
+          - 设计令牌
+      - canonical: consistency
+        aliases:
+          - visual drift
+          - ui consistency
+          - 一致性
+          - 漂移检查
+    diagram-flow:
+      - canonical: flowchart
+        aliases:
+          - process flow
+          - workflow diagram
+          - 流程图
+          - 业务流程
+      - canonical: user flow
+        aliases:
+          - onboarding flow
+          - flow page
+          - 链路
+          - 用户流
+          - 流程页
+      - canonical: decision tree
+        aliases:
+          - branch logic
+          - decision flow
+          - 分支逻辑
+          - 决策树
+          - 审批链路
+    computational-design:
+      - canonical: computational design
+        aliases:
+          - parametric design
+          - 计算设计
+          - 概念阶段分析
+      - canonical: climate analysis
+        aliases:
+          - climate study
+          - weather-driven design
+          - climate condition
+          - 气候分析
+          - 气候条件
+          - 气候
+          - 气候研究
+      - canonical: solar analysis
+        aliases:
+          - sun exposure
+          - daylight and shading
+          - orientation
+          - 日照分析
+          - 朝向
+          - 日照
+          - 日照优化
+          - 太阳辐射
+      - canonical: building load
+        aliases:
+          - load estimate
+          - hvac load
+          - 荷载估算
+          - 荷载
+          - 负荷
+          - 负荷计算
+      - canonical: sustainability
+        aliases:
+          - sustainable design
+          - 可持续性
+          - 可持续
+      - canonical: performance goal
+        aliases:
+          - optimization goal
+          - final recommendation
+          - 最终方案
+          - 优化方案
+          - 性能目标
+
+agents:
+  - id: agent.visual-style
+    categories:
+      - visual-style
+      - web-ui
+    route_priority: 90
+    preferred_skills:
+      - taste.taste-core
+      - taste.images-taste
+      - taste.redesign
+      - taste.gpt-taste
+      - taste.soft
+      - taste.minimalist
+      - taste.brutalist
+      - taste.stitch
+      - taste.output-enforcement
+      - web.interface-design-core
+    curated_primary_skills:
+      - taste.taste-core
+      - taste.images-taste
+      - taste.redesign
+      - taste.output-enforcement
+    default_execution_mode: image-first
+    execution_chain:
+      - intent_normalization
+      - agent.visual-style
+      - execution.image-first
+      - execution.style-redesign
+      - execution.design-spec
+      - docs/web-high-fidelity-replication-playbook.md
+      - docs/derived-integration-note.md#agent-routing-bridge
+    required_quality_gates:
+      - anti-slop-core
+      - output-enforcement
+    workflow_degrade_policy:
+      trigger: image_generation_unavailable
+      fallback_mode: design-spec
+      required_label: "[Image-First Degraded]"
+      required_notice: "Image generation is unavailable. Switched to text-first guidance with visual parity risk."
+    intent_keywords:
+      - image-first
+      - redesign
+      - style profile
+      - visual style
+      - minimalist
+      - brutalist
+      - soft ui
+      - stitch design
+      - output enforcement
+    intent_match:
+      synonym_group: visual-style
+      min_keyword_hits: 1
+    priority_when_any_keywords_present:
+      - image-first
+      - redesign
+      - style profile
+      - minimalist
+      - brutalist
+      - soft ui
+      - stitch design
+      - output enforcement
+    fallback:
+      - web.interface-design-core
+      - library.curated-design-reference
+
+  - id: agent.web-design
+    categories:
+      - web-ui
+      - ux-adjacent
+    route_priority: 60
+    preferred_skills:
+      - web.interface-design-core
+      - web.layout-hierarchy
+      - web.state-spec
+      - web.responsive-qa
+      - ux.review-suite
+      - ux.ux-friction-scan
+      - ux.flow-clarity-pass
+    curated_primary_skills:
+      - web.interface-design-core
+      - web.layout-hierarchy
+      - web.state-spec
+      - ux.review-suite
+    default_execution_mode: html-design
+    execution_chain:
+      - intent_normalization
+      - agent.web-design
+      - execution.html-design
+      - execution.prototype
+      - execution.animation
+      - docs/web-high-fidelity-replication-playbook.md
+      - docs/derived-integration-note.md#agent-routing-bridge
+    replication_execution:
+      enabled: true
+      entrypoint: agent.web-design
+      fixed_skill_chain:
+        - web.interface-design-core
+        - web.layout-hierarchy
+        - web.state-spec
+        - web.responsive-qa
+        - system.component-ruleset
+        - ux.a11y-light-audit
+      page_batching:
+        batch_size_min: 2
+        batch_size_max: 4
+        gate_required_before_next_batch: true
+      per_batch_gate:
+        - structure_fidelity_pass
+        - visual_rhythm_pass
+        - interaction_state_pass
+        - responsive_pass
+        - accessibility_pass
+        - component_consistency_pass
+      replication_deliverables:
+        - semantic_layout_blueprint
+        - component_state_matrix
+        - breakpoint_behavior_matrix
+        - css_architecture_ruleset
+        - accessibility_issue_checklist
+        - asset_replacement_map
+    required_quality_gates:
+      - anti-slop-core
+      - output-enforcement
+    intent_keywords:
+      - web ui
+      - interface layout
+      - prototype
+      - html design
+      - responsive
+      - component state
+      - landing page
+    intent_match:
+      synonym_group: web-ui
+      min_keyword_hits: 1
+    fallback:
+      - library.curated-design-reference
+
+  - id: agent.design-system
+    categories:
+      - design-system
+      - ux-adjacent
+    route_priority: 50
+    preferred_skills:
+      - system.signature-visual-language
+      - system.token-audit
+      - system.component-ruleset
+      - system.visual-drift-review
+      - ux.review-suite
+      - ux.a11y-light-audit
+    curated_primary_skills:
+      - system.signature-visual-language
+      - system.token-audit
+      - system.component-ruleset
+      - ux.a11y-light-audit
+    default_execution_mode: critique
+    execution_chain:
+      - intent_normalization
+      - agent.design-system
+      - execution.critique
+      - execution.html-design
+      - execution.analysis
+      - docs/design-skill-canonical-map.md
+      - docs/derived-integration-note.md#agent-routing-bridge
+    intent_keywords:
+      - design system
+      - visual language
+      - token
+      - component standard
+      - consistency
+    intent_match:
+      synonym_group: design-system
+      min_keyword_hits: 2
+    fallback:
+      - library.curated-design-reference
+
+  - id: agent.diagram-design
+    categories:
+      - diagram-flow
+    route_priority: 50
+    preferred_skills:
+      - diagram.diagram-design-core
+      - diagram.flow-skeleton
+      - diagram.branch-logic-normalize
+      - diagram.diagram-clarity-check
+    curated_primary_skills:
+      - diagram.diagram-design-core
+      - diagram.flow-skeleton
+    default_execution_mode: slides
+    execution_chain:
+      - intent_normalization
+      - agent.diagram-design
+      - execution.slides
+      - execution.animation
+      - execution.critique
+      - docs/agent-router-validation-matrix.md
+      - docs/derived-integration-note.md#agent-routing-bridge
+    intent_keywords:
+      - flowchart
+      - user flow
+      - process diagram
+      - architecture diagram
+      - decision tree
+    intent_match:
+      synonym_group: diagram-flow
+      min_keyword_hits: 2
+    fallback:
+      - library.curated-design-reference
+
+  - id: agent.comp-design
+    categories:
+      - computational-design
+    route_priority: 50
+    preferred_skills:
+      - comp.workflow-calculator
+      - comp.climate-analysis
+      - comp.site-solar-analysis
+      - comp.building-load-calculations
+      - comp.lifecycle-sustainability
+      - comp.accessibility-code-compliance
+      - comp.computational-design-suite
+    curated_primary_skills:
+      - comp.computational-design-suite
+      - comp.site-solar-analysis
+    default_execution_mode: analysis
+    execution_chain:
+      - intent_normalization
+      - agent.comp-design
+      - execution.analysis
+      - docs/comp-design-fallback-guard-template.md
+      - docs/derived-integration-note.md#agent-routing-bridge
+    intent_keywords:
+      - computational design
+      - climate analysis
+      - solar analysis
+      - building load
+      - sustainability
+      - performance goal
+      - code compliance
+    intent_match:
+      synonym_group: computational-design
+      min_keyword_hits: 2
+    risk_flags:
+      - cross-category-fallback-needs-domain-check
+      - reference-fallback-should-include-disclaimer
+    fallback_constraints:
+      - only use fallback when no computational skill meets intent
+      - include reference-mode disclaimer in response
+      - request missing computational inputs before final recommendation
+    fallback_guard:
+      trigger_mode: no-direct-computational-skill-match
+      required_inputs:
+        - location_or_climate_zone
+        - geometry_or_massing_assumptions
+        - target_performance_goal
+      intent_input_hints:
+        climate-analysis:
+          - location_or_climate_zone
+          - seasonal_priority
+          - envelope_assumptions
+        site-solar-analysis:
+          - site_orientation
+          - massing_assumptions
+          - daylight_or_solar_goal
+        building-load-calculations:
+          - occupancy_program_assumptions
+          - envelope_assumptions
+          - operation_schedule_assumptions
+      response_contract:
+        - prepend_label: "[Reference Mode]"
+        - include_disclaimer: "This is reference-only guidance, not a computational result."
+        - include_missing_input_checklist: true
+        - block_final_recommendation_when_inputs_missing: true
+    fallback:
+      - library.curated-design-reference

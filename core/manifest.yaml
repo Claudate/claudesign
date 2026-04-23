@@ -1,0 +1,26 @@
+version: 1
+name: claudesign-core
+last_updated: 2026-04-23
+
+contracts:
+  skill_catalog: skills/skill-index.yaml
+  router_source: agents/router-map.yaml
+  validation_cases: agents/router-validation-cases.yaml
+  validation_script: scripts/validate_router.rb
+
+execution_model:
+  canonical_brand: claudesign
+  execution_bridge_enabled: true
+  supported_contracts:
+    - execution_mode
+    - execution_bridge_status
+    - default_execution_mode
+    - execution_bridge
+    - execution_chain
+
+package_contents:
+  - skills/
+  - agents/
+  - scripts/validate_router.rb
+  - LICENSE.md
+  - README.md

@@ -1,0 +1,29 @@
+version: 1
+adapter_id: openai
+display_name: claudesign Compatibility Adapter for OpenAI Hosts
+last_updated: 2026-04-23
+
+install_contract:
+  package_format: directory-bundle
+  core_manifest: core/manifest.yaml
+  required_files:
+    - skills/skill-index.yaml
+    - agents/router-map.yaml
+    - agents/router-validation-cases.yaml
+  optional_docs:
+    - docs/prompt-mapping-samples.md
+
+entrypoints:
+  validation_command: ruby scripts/validate_router.rb
+  local_shortcut: make validate-router
+
+compatibility:
+  preserves_brand: claudesign
+  preserves_existing_skill_layout: true
+  preserves_existing_router_layout: true
+  adapter_role: host-runtime-compatibility
+
+notes:
+  - This adapter is a packaging layer for OpenAI-oriented host runtimes.
+  - Core routing semantics still come from `skills/skill-index.yaml` and `agents/router-map.yaml`.
+  - Platform execution should bind to `execution_mode`, `execution_chain`, and guard rules without renaming canonical skill IDs.
