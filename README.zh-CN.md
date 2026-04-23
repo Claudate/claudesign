@@ -2,125 +2,154 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-`claudesign` 是一个面向 AI 宿主环境的可移植设计技能包。它把精选设计技能目录、可校验的路由契约，以及一套实用的 `DESIGN.md` 工作流打包在一起，用来支持结构化设计规范的校验、对比和导出。
+`claudesign` 是一个把模糊设计想法整理成 `DESIGN.md` 的工具包，方便 AI 和工程一起使用。
 
-## 这个项目是什么
+你可以先让 AI 生成一版 `DESIGN.md`，再人工修改、校验、对比版本，最后导出 token 给前端开发。
 
-`claudesign` 可以理解成一层“设计能力打包与契约层”。
+## 先看这个
 
-它主要帮你做这些事：
+如果你只想用最简单的话理解这个项目，可以这样记：
 
-- 安装一套可复用的设计技能 bundle
-- 把用户请求路由到明确的设计执行模式
-- 产出可 lint、可 diff、可 export 的 `DESIGN.md` 结构化设计规范
-- 在 Claude、OpenAI、Codex 和内部运行时之间保持同一套设计契约
+1. 先让 AI 按你的产品需求生成一份 `DESIGN.md`
+2. 你再手动调整这份设计规范
+3. 用 `lint` 检查格式对不对
+4. 再让 AI 或工程师根据这份 `DESIGN.md` 开发
+5. 需要时导出 token 给前端使用
 
-## 里面包含什么
+这就是这个仓库最核心、也最适合普通用户的用法。
 
-- `skills/skill-index.yaml`：canonical skill catalog
-- `agents/router-map.yaml`：路由 source of truth
-- `adapters/`：`generic`、`claude`、`openai` 的打包元数据
-- `scripts/designmd.mjs`：`DESIGN.md` 命令包装
-- `docs/designmd-examples/`：`taste.stitch` 风格输出的内置样例
+## 这个项目到底是什么
 
-## 架构一眼看懂
+它不是画图工具，也不是 Figma 替代品。
 
-这个仓库刻意分成几层：
+它更像一个“设计规范工作流工具包”，主要提供这些能力：
 
-- `skills/`：定义技能能力和技能资产
-- `agents/`：定义路由规则、执行模式和验证用例
-- `adapters/`：定义不同宿主的打包元数据
-- `scripts/`：验证脚本和 `DESIGN.md` 辅助命令
-- `docs/`：使用说明、样例和契约文档
+- 给 AI 宿主安装一套可复用的设计技能
+- 用 `DESIGN.md` 写结构化设计规范
+- 用 `lint` 校验设计规范
+- 用 `diff` 对比两个设计版本
+- 用 `export` 导出工程可用的 token
+- 在 Claude、OpenAI、Codex 和内部运行时之间共用同一套设计契约
 
-如果你只想快速理解这个项目，可以这样记：
+## `DESIGN.md` 适合拿来做什么
 
-`skills` 决定能做什么，`agents` 决定请求怎么路由，`adapters` 决定怎么打包到不同宿主，`DESIGN.md` 则提供结构化设计规范输出。
+如果你希望 AI 产出的设计更稳定、更容易落地开发，那么 `DESIGN.md` 很适合。
+
+常见用途：
+
+- 用 AI 生成第一版设计系统
+- 定义颜色、字体、间距、圆角、组件 token
+- 写清楚视觉规则和 Do / Don't
+- 审查设计改版时到底改了什么
+- 把结构化 token 交给前端工程师
+
+它尤其适合这些场景：
+
+- 落地页
+- 产品 UI 风格规范
+- 组件库
+- 品牌视觉基线
+- 设计系统交付
 
 ## 快速开始
 
-### 安装默认 bundle
+### 1. 安装
 
 ```bash
 npx claudesign-plugin install
 ```
 
-默认会把 `generic` 版本安装到 `~/.claudesign/plugins/generic`。
+默认会安装 `generic` 版本到 `~/.claudesign/plugins/generic`。
 
-### 查看可用适配目标
-
-```bash
-npx claudesign-plugin list
-```
-
-### 查看 `DESIGN.md` 规范
+### 2. 先看一个合法的 `DESIGN.md` 长什么样
 
 ```bash
 npx claudesign-plugin designmd spec --rules
+sed -n '1,220p' ./skills/visual-style/DESIGN.md
 ```
 
-这是理解本仓库支持什么样的结构化设计规范文件的最快方式。
+### 3. 校验仓库自带样例
 
-## 具体怎么用
+```bash
+node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
+```
 
-### 使用场景 1：把 bundle 安装到宿主环境
+看懂之后，把样例路径换成你自己的 `DESIGN.md` 文件即可。
 
-如果你的目标只是“把这套 bundle 装到 AI 宿主里”，按下面做：
+## 推荐使用流程
 
-1. 安装默认 bundle：
+如果你是设计师、产品经理、独立开发者，或者正在和 AI 协作做设计，建议直接按这个流程走：
+
+### 第 1 步：先让 AI 生成第一版
+
+你可以把这些信息交给 AI：
+
+- 产品类型
+- 目标用户
+- 品牌关键词
+- 参考产品
+- 需要设计的页面或组件
+
+让 AI 输出一份 `DESIGN.md` 初稿。
+
+### 第 2 步：手动优化这份文件
+
+重点检查这些内容有没有写清楚：
+
+- 颜色 token
+- 字体 token
+- 间距和圆角
+- 组件规则
+- 布局指导
+- 交互状态
+- Do / Don't 约束
+
+### 第 3 步：校验文件
+
+```bash
+node ./scripts/designmd.mjs lint ./your.DESIGN.md
+```
+
+### 第 4 步：拿它指导开发
+
+把校验通过的 `DESIGN.md` 当成设计源文件，交给 AI 编码代理或前端工程师实现。
+
+### 第 5 步：设计改版时做对比
+
+```bash
+node ./scripts/designmd.mjs diff ./old.DESIGN.md ./new.DESIGN.md
+```
+
+### 第 6 步：导出 token 给工程侧
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./your.DESIGN.md
+node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
+```
+
+## 常用命令
+
+### 安装
 
 ```bash
 npx claudesign-plugin install
-```
-
-2. 或者安装指定宿主适配版本：
-
-```bash
 npx claudesign-plugin install --adapter claude
 npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
 ```
 
-3. 在你的宿主运行时里指向安装后的 bundle 目录。
-
-结果：宿主会拿到这个仓库分发的同一套 `skills`、`agents`、适配器元数据和文档。
-
-### 使用场景 2：先看懂设计规范格式，再决定怎么生成
-
-如果你的目标是“先看懂这个项目到底支持什么格式”，按下面做：
-
-1. 打印 `DESIGN.md` 规则：
+### 查看格式规则
 
 ```bash
 npx claudesign-plugin designmd spec --rules
 ```
 
-2. 打开仓库内置基线样例：
+### 校验一份设计规范
 
 ```bash
-sed -n '1,220p' ./skills/visual-style/DESIGN.md
+node ./scripts/designmd.mjs lint ./your.DESIGN.md
 ```
 
-3. 再看工作流说明：
-
-```bash
-sed -n '1,220p' ./docs/designmd-workflows.md
-```
-
-结果：你会按顺序看到规范长什么样、真实样例长什么样、推荐工作流怎么走。
-
-### 使用场景 3：校验或审查一份设计规范
-
-如果你的目标是“检查这份设计规范能不能用”，按下面做：
-
-1. 先校验仓库内置样例：
-
-```bash
-node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
-```
-
-2. 如果你要校验自己的文件，把这个路径替换成你自己的 `DESIGN.md` 文件路径。
-
-3. 如果你要比较两个版本之间的变化：
+### 比较两个版本
 
 ```bash
 node ./scripts/designmd.mjs diff \
@@ -128,60 +157,22 @@ node ./scripts/designmd.mjs diff \
   ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
 ```
 
-结果：你可以知道文件结构是否有效，以及两个版本之间具体改了什么。
-
-### 使用场景 4：把 token 交给工程侧或下游工具
-
-如果你的目标是“把设计规范变成工程更容易接的格式”，按下面做：
-
-1. 导出 Tailwind token：
+### 导出 token
 
 ```bash
-node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
+node ./scripts/designmd.mjs export --format tailwind ./your.DESIGN.md
+node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
 ```
 
-2. 导出 DTCG token：
+## 仓库里都有什么
 
-```bash
-node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
-```
+- `skills/`：设计能力和技能资产
+- `agents/`：路由规则和校验用例
+- `adapters/`：不同宿主的打包元数据
+- `scripts/`：校验命令和 `DESIGN.md` 工具脚本
+- `docs/`：说明文档、样例和集成说明
 
-3. 如果你想保存成文件，可以直接重定向：
-
-```bash
-node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md > tailwind.theme.json
-```
-
-结果：工程师或下游系统拿到的是机器可读 token，而不只是说明文字。
-
-## `DESIGN.md` 工作流
-
-`DESIGN.md` 是一种给 coding agents 使用的结构化设计规范文件。在这个仓库里，它主要承担三件事情：
-
-- `lint`：校验设计规范结构是否有效
-- `diff`：比较两个设计规范版本之间的变化
-- `export`：把 token 转成 Tailwind 或 DTCG 这类下游可消费格式
-
-### 校验内置样例
-
-```bash
-node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
-```
-
-### 对比仓库内置的两个样例
-
-```bash
-node ./scripts/designmd.mjs diff \
-  ./docs/designmd-examples/taste-stitch-base.DESIGN.md \
-  ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
-```
-
-### 导出给下游使用的 token
-
-```bash
-node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
-node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
-```
+如果你只是普通使用者，前期其实不用关心这些目录，先聚焦 `DESIGN.md` 和上面的命令就够了。
 
 ## 平台支持
 
@@ -210,4 +201,6 @@ make designmd-export-dtcg
 
 ## 重要说明
 
-截至 2026-04-23，上游 Google Labs `DESIGN.md` 规范仍然标记为 `alpha`。`claudesign` 已经把它作为结构化设计规范工作流接入进来，但不建议把上游格式当成完全稳定不变的长期标准。
+截至 2026-04-23，上游 Google Labs `DESIGN.md` 规范仍然处于 `alpha` 阶段。
+
+这意味着这套流程已经可以实际使用，但上游格式未来仍可能继续变化。

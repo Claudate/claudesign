@@ -2,125 +2,154 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-`claudesign` is a portable design-skill bundle for AI hosts. It packages a curated design skill catalog, a validated routing contract, and a practical `DESIGN.md` workflow for structured design-spec validation, diffing, and export.
+`claudesign` helps you turn a vague design idea into a structured `DESIGN.md` file that AI and engineers can both use.
+
+You can use AI to generate a first draft of `DESIGN.md`, review and refine it, validate it, compare revisions, and export design tokens for implementation.
+
+## Start Here
+
+If you only want the simplest mental model:
+
+1. Ask AI to generate a `DESIGN.md` for your product or page.
+2. Edit that file until the design direction is right.
+3. Run `lint` to validate it.
+4. Use that `DESIGN.md` as the design brief for development.
+5. Export tokens when engineering needs machine-readable output.
+
+That is the main workflow this repo is built for.
 
 ## What This Project Is
 
-`claudesign` is the packaging and contract layer behind a multi-host design workflow.
+This repo is not a drawing tool and not a Figma replacement.
 
-It helps you:
+It is a design workflow bundle that gives you:
 
-- install a reusable design skill bundle
-- route user requests into explicit design execution modes
-- ship structured `DESIGN.md` artifacts that can be linted, diffed, and exported
-- keep the same design contract across Claude, OpenAI, Codex, and internal runtimes
+- reusable design skills for AI hosts
+- a structured `DESIGN.md` format for design specs
+- validation with `lint`
+- revision comparison with `diff`
+- token export with `export`
+- the same shared contract across Claude, OpenAI, Codex, and internal runtimes
 
-## What It Includes
+## What `DESIGN.md` Is Good For
 
-- a canonical skill catalog in `skills/skill-index.yaml`
-- a routing source of truth in `agents/router-map.yaml`
-- host adapters for `generic`, `claude`, and `openai`
-- a `DESIGN.md` wrapper in `scripts/designmd.mjs`
-- built-in `DESIGN.md` examples and workflows for `taste.stitch`-style outputs
+Use `DESIGN.md` when you want AI-generated design work to become more stable and easier to implement.
 
-## Architecture At A Glance
+Typical use cases:
 
-The repository is intentionally split into a few clear layers:
+- generate a first-pass design system with AI
+- define colors, typography, spacing, radius, and component tokens
+- document visual rules and do/don't constraints
+- review what changed between design revisions
+- hand structured tokens to frontend engineers
 
-- `skills/`: the design capabilities and skill assets
-- `agents/`: routing rules, execution modes, and validation cases
-- `adapters/`: host-specific packaging metadata
-- `scripts/`: validation and `DESIGN.md` helper commands
-- `docs/`: usage guides, examples, and contract notes
+It works especially well for:
 
-If you only want to understand the project quickly, the mental model is:
-
-`skills` define what the bundle can do, `agents` decide how requests are routed, `adapters` package the bundle for each host, and `DESIGN.md` provides a structured output format for design-spec workflows.
+- landing pages
+- product UI styling
+- component libraries
+- brand visual baselines
+- design-system handoff
 
 ## Quick Start
 
-### Install the default bundle
+### 1. Install the bundle
 
 ```bash
 npx claudesign-plugin install
 ```
 
-By default this installs the `generic` bundle to `~/.claudesign/plugins/generic`.
+This installs the default `generic` bundle to `~/.claudesign/plugins/generic`.
 
-### List available adapters
-
-```bash
-npx claudesign-plugin list
-```
-
-### Inspect the `DESIGN.md` rules
+### 2. See what a valid `DESIGN.md` looks like
 
 ```bash
 npx claudesign-plugin designmd spec --rules
+sed -n '1,220p' ./skills/visual-style/DESIGN.md
 ```
 
-This is the fastest way to see what a supported structured design spec looks like.
+### 3. Validate the bundled example
 
-## How To Use It
+```bash
+node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
+```
 
-### Use case 1: install the bundle into a host
+If this makes sense to you, replace that example path with your own `DESIGN.md`.
 
-If your goal is simply "make this bundle available to my AI host", do this:
+## Recommended User Workflow
 
-1. Install the default bundle:
+If you are a designer, founder, or PM working with AI, this is the easiest path:
+
+### Step 1. Generate a first draft with AI
+
+Give AI inputs such as:
+
+- product type
+- target users
+- brand keywords
+- visual references
+- required pages or components
+
+Ask it to output a `DESIGN.md`.
+
+### Step 2. Refine the file manually
+
+Review whether the file clearly defines:
+
+- color tokens
+- typography tokens
+- spacing and radius
+- component rules
+- layout guidance
+- interaction states
+- do/don't constraints
+
+### Step 3. Validate it
+
+```bash
+node ./scripts/designmd.mjs lint ./your.DESIGN.md
+```
+
+### Step 4. Use it during development
+
+Treat the validated `DESIGN.md` as the design source of truth for AI coding agents or frontend engineers.
+
+### Step 5. Compare changes when the design evolves
+
+```bash
+node ./scripts/designmd.mjs diff ./old.DESIGN.md ./new.DESIGN.md
+```
+
+### Step 6. Export tokens for implementation
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./your.DESIGN.md
+node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
+```
+
+## Common Commands
+
+### Install
 
 ```bash
 npx claudesign-plugin install
-```
-
-2. Or install a host-specific adapter:
-
-```bash
 npx claudesign-plugin install --adapter claude
 npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
 ```
 
-3. Point your host runtime at the installed bundle directory.
-
-Result: your host gets the same `skills`, `agents`, adapter metadata, and docs shipped by this repo.
-
-### Use case 2: understand the design-spec format before generating anything
-
-If your goal is "show me what format this project expects", do this:
-
-1. Print the `DESIGN.md` rules:
+### Inspect the format
 
 ```bash
 npx claudesign-plugin designmd spec --rules
 ```
 
-2. Open the bundled baseline example:
+### Validate a spec
 
 ```bash
-sed -n '1,220p' ./skills/visual-style/DESIGN.md
+node ./scripts/designmd.mjs lint ./your.DESIGN.md
 ```
 
-3. Read the workflow guide:
-
-```bash
-sed -n '1,220p' ./docs/designmd-workflows.md
-```
-
-Result: you can see the supported spec shape, a real example, and the expected workflow in order.
-
-### Use case 3: validate or review a design spec
-
-If your goal is "check whether this design spec is usable", do this:
-
-1. Validate the built-in example:
-
-```bash
-node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
-```
-
-2. Replace that file path with your own `DESIGN.md` file if you want to validate a custom spec.
-
-3. If you are revising an existing spec, compare two versions:
+### Compare two versions
 
 ```bash
 node ./scripts/designmd.mjs diff \
@@ -128,67 +157,29 @@ node ./scripts/designmd.mjs diff \
   ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
 ```
 
-Result: you can check whether the file is structurally valid and what changed between revisions.
-
-### Use case 4: hand tokens to engineers or downstream tooling
-
-If your goal is "turn the design spec into something implementation-friendly", do this:
-
-1. Export Tailwind tokens:
+### Export tokens
 
 ```bash
-node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
+node ./scripts/designmd.mjs export --format tailwind ./your.DESIGN.md
+node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
 ```
 
-2. Export DTCG tokens:
+## What Is In This Repo
 
-```bash
-node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
-```
+- `skills/`: design capabilities and skill assets
+- `agents/`: routing rules and validation cases
+- `adapters/`: host-specific packaging metadata
+- `scripts/`: validation and `DESIGN.md` helper commands
+- `docs/`: guides, examples, and integration notes
 
-3. Redirect the output to a file if needed:
-
-```bash
-node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md > tailwind.theme.json
-```
-
-Result: downstream apps or engineers get machine-readable design tokens instead of prose only.
-
-## The `DESIGN.md` Workflow
-
-`DESIGN.md` is a structured design spec file for coding agents. In this repo it is used for three practical jobs:
-
-- `lint`: validate the structure of a design spec
-- `diff`: compare two design spec revisions
-- `export`: convert tokens into downstream-friendly formats such as Tailwind or DTCG
-
-### Validate the built-in sample
-
-```bash
-node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
-```
-
-### Compare two included examples
-
-```bash
-node ./scripts/designmd.mjs diff \
-  ./docs/designmd-examples/taste-stitch-base.DESIGN.md \
-  ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
-```
-
-### Export tokens for downstream use
-
-```bash
-node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
-node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
-```
+If you are a normal user, you can ignore most of this at first and focus on `DESIGN.md` plus the commands above.
 
 ## Platform Support
 
-- `generic`: neutral adapter bundle for custom runtimes
-- `claude`: adapter bundle for Claude-oriented hosts
-- `openai`: adapter bundle for OpenAI-oriented hosts
-- `codex`: supported through `.codex-plugin/plugin.json` plus the same shared contracts
+- `generic`: neutral adapter for custom runtimes
+- `claude`: adapter for Claude-oriented hosts
+- `openai`: adapter for OpenAI-oriented hosts
+- `codex`: supported through `.codex-plugin/plugin.json` and the same shared contracts
 
 ## Local Shortcuts
 
@@ -210,4 +201,6 @@ make designmd-export-dtcg
 
 ## Important Note
 
-As of 2026-04-23, the upstream Google Labs `DESIGN.md` format is still marked `alpha`. `claudesign` supports it in an optional-but-practical way for structured design-spec workflows, but you should not treat the upstream format as permanently stable yet.
+As of 2026-04-23, the upstream Google Labs `DESIGN.md` format is still marked `alpha`.
+
+That means this workflow is already useful in practice, but the upstream format may still change over time.

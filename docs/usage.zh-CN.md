@@ -1,176 +1,231 @@
 # Claudesign 使用说明
 
-## 先说人话
+## 一句话理解
 
-如果你只是想快速理解这个项目，可以直接这样看：
+`claudesign` 最适合这样用：
 
-- `claudesign` 是一个可移植的设计技能包
-- 现在它额外支持 `DESIGN.md`
-- `DESIGN.md` 可以让你把“设计风格说明”变成“可校验、可对比、可导出”的文件
+先让 AI 生成一份 `DESIGN.md`，你再人工优化它，校验通过后，把它当成设计规范交给 AI 或工程师开发。
 
-也就是说，这个仓库现在不只是“装技能”，还支持“管理设计规范文件”。
+如果你是第一次接触这个项目，只需要先理解这一条就够了。
 
-## 新增的 `DESIGN.md` 到底有什么用
+## 最推荐的新手流程
 
-把它理解成给 Agent 和工程师共用的设计说明文件就行。
+### 第 1 步：先看格式
 
-它最常见的三个用途是：
+先看看这个项目支持什么样的 `DESIGN.md`：
 
-1. `lint`
-检查这份设计规范文件写得对不对。
+```bash
+npx claudesign-plugin designmd spec --rules
+sed -n '1,220p' ./skills/visual-style/DESIGN.md
+```
 
-2. `diff`
-比较两个设计规范版本之间到底改了什么。
+你不需要一开始看懂全部细节，只要知道它大概会包含这些内容：
 
-3. `export`
-把设计 token 导出成 Tailwind 或 DTCG 这类下游能消费的格式。
+- 颜色
+- 字体
+- 间距
+- 圆角
+- 组件 token
+- 页面和视觉规则
+- Do / Don't 约束
 
-## 傻瓜式使用
+### 第 2 步：让 AI 生成第一版
 
-### 我只想安装
+把你的项目信息告诉 AI，让它先输出一份 `DESIGN.md` 初稿。
+
+最少建议提供这些信息：
+
+- 产品类型
+- 目标用户
+- 品牌关键词
+- 参考产品或参考风格
+- 需要设计的页面
+- 是否偏品牌感、工具感、科技感、极简感等
+
+### 第 3 步：手动优化
+
+AI 生成的第一版通常只能当草稿，建议你重点检查这些地方：
+
+- 颜色是否符合品牌
+- 字体层级是否清楚
+- spacing / radius 是否完整
+- 组件规则是否足够落地
+- 有没有写清楚状态和异常态
+- 有没有明确写 Do / Don't
+
+### 第 4 步：校验文件
+
+```bash
+node ./scripts/designmd.mjs lint ./your.DESIGN.md
+```
+
+如果校验通过，这份文件就更适合拿去做后续开发了。
+
+### 第 5 步：拿它指导开发
+
+把通过校验的 `DESIGN.md` 交给：
+
+- AI 编码代理
+- 前端工程师
+- 设计系统维护者
+
+它的作用不是替代设计稿，而是把设计约束写成更稳定、更可复用的规范。
+
+### 第 6 步：改版时做版本对比
+
+```bash
+node ./scripts/designmd.mjs diff ./old.DESIGN.md ./new.DESIGN.md
+```
+
+这样你就能看到两版设计规范具体改了什么。
+
+### 第 7 步：导出 token 给工程侧
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./your.DESIGN.md
+node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
+```
+
+## 可以直接复制给 AI 的提示词模板
+
+如果你想让 AI 帮你先生成第一版 `DESIGN.md`，可以直接用下面这个模板。
+
+```text
+请根据以下项目背景，生成一份结构清晰、可用于开发协作的 DESIGN.md。
+
+项目类型：
+目标用户：
+品牌关键词：
+参考产品 / 参考风格：
+主要页面：
+核心组件：
+是否需要移动端适配：
+希望避免的风格：
+
+请输出内容至少包含：
+1. 基本信息（name / description）
+2. colors
+3. typography
+4. spacing / rounded
+5. components
+6. layout guidance
+7. interaction states
+8. do / don't
+
+要求：
+- 风格具体，不要空泛
+- token 命名清楚
+- 不要只写营销形容词
+- 组件规则要能指导前端实现
+- 明确列出不建议出现的视觉问题
+```
+
+## 常见命令
+
+### 安装
 
 ```bash
 npx claudesign-plugin install
 ```
 
-默认会安装 `generic` 版本到：
+默认安装到：
 
 ```text
 ~/.claudesign/plugins/generic
 ```
 
-### 我只想看支持哪些目标
+### 查看支持的适配目标
 
 ```bash
 npx claudesign-plugin list
 ```
 
-### 我只想看 `DESIGN.md` 应该长什么样
+### 查看 `DESIGN.md` 规则
 
 ```bash
 npx claudesign-plugin designmd spec --rules
 ```
 
-### 我只想验证仓库里的样例是否有效
-
-在仓库目录里运行：
+### 校验设计规范
 
 ```bash
+node ./scripts/designmd.mjs lint ./your.DESIGN.md
+```
+
+### 对比两个版本
+
+```bash
+node ./scripts/designmd.mjs diff ./old.DESIGN.md ./new.DESIGN.md
+```
+
+### 导出 token
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./your.DESIGN.md
+node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
+```
+
+## 如果你只想快速试一下
+
+直接跑这三条命令就行：
+
+```bash
+npx claudesign-plugin designmd spec --rules
+sed -n '1,220p' ./skills/visual-style/DESIGN.md
 node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
 ```
 
-### 我只想看两份设计规范差异
+这样你就能快速知道：
 
-```bash
-node ./scripts/designmd.mjs diff \
-  ./docs/designmd-examples/taste-stitch-base.DESIGN.md \
-  ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
-```
+- 格式长什么样
+- 仓库样例长什么样
+- 校验命令怎么用
 
-### 我只想导出给工程侧
+## 仓库里最值得先看的文件
 
-```bash
-node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
-node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
-```
+- `skills/visual-style/DESIGN.md`
+- `docs/designmd-workflows.md`
+- `docs/designmd-examples/taste-stitch-base.DESIGN.md`
+- `docs/designmd-examples/taste-stitch-variant.DESIGN.md`
 
-## 常用安装方式
+## 适合什么用户
 
-安装 Claude 适配版本：
+这套工作流特别适合：
 
-```bash
-npx claudesign-plugin install --adapter claude
-```
+- 想让 AI 辅助做设计规范的人
+- 想让前端实现更稳定的人
+- 在做设计系统或品牌规范的人
+- 希望保留设计版本变化记录的人
 
-安装 OpenAI 适配版本到自定义目录：
+## 不适合把它当成什么
 
-```bash
-npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
-```
+它不适合直接当成：
 
-`--platform` 也可以作为 `--adapter` 的别名：
+- 绘图软件
+- 高保真视觉稿替代品
+- Figma 替代品
 
-```bash
-npx claudesign-plugin install --platform claude
-```
-
-## 如果你在仓库里本地开发
-
-先列出适配目标：
-
-```bash
-node ./bin/claudesign-plugin.mjs list
-```
-
-本地安装一个测试 bundle：
-
-```bash
-node ./bin/claudesign-plugin.mjs install --adapter generic --target /tmp/claudesign-local
-```
-
-发布前跑路由校验：
-
-```bash
-ruby scripts/validate_router.rb
-```
-
-## 本地快捷命令
-
-```bash
-make validate-router
-make designmd-lint
-make designmd-diff-sample
-make designmd-export-tailwind
-make designmd-export-dtcg
-```
-
-## 仓库里已经给你的 `DESIGN.md` 说明
-
-仓库里现在已经有三类现成材料，不需要你自己猜：
-
-- 基线样例：`skills/visual-style/DESIGN.md`
-- 对比样例：`docs/designmd-examples/taste-stitch-base.DESIGN.md`
-- 工作流说明：`docs/designmd-workflows.md`
-
-如果你是第一次接触，建议就按这个顺序看：
-
-1. `npx claudesign-plugin designmd spec --rules`
-2. `skills/visual-style/DESIGN.md`
-3. `docs/designmd-workflows.md`
-4. `diff` / `export` 命令
-
-## 安装后的内容
-
-每次安装生成的 bundle 会包含：
-
-- 技能目录
-- 路由契约
-- 校验用例
-- 校验脚本
-- `DESIGN.md` 命令包装脚本
-- 内置的 `DESIGN.md` diff 样例
-- README 和部分文档
-- 当前适配目标对应的元数据文件
+更准确地说，它是设计规范和工程实现之间的桥梁。
 
 ## 平台支持
 
-- `generic`：适用于自定义或内部 Agent 运行时的中性 bundle
-- `claude`：面向 Claude 宿主环境的适配 bundle
-- `openai`：面向 OpenAI 宿主环境的适配 bundle
-- `codex`：通过仓库中的插件清单和同一套共享契约提供支持
+- `generic`：适用于自定义或内部 Agent 运行时
+- `claude`：面向 Claude 宿主环境
+- `openai`：面向 OpenAI 宿主环境
+- `codex`：通过插件清单和同一套共享契约提供支持
 
 ## 给维护者看的补充说明
 
-如果你是维护这个仓库，而不是普通使用者，再看下面这些：
+如果你是在维护这个仓库，而不是普通用户，可以重点看这些文件：
 
-- `skills/skill-index.yaml`：技能目录的 canonical source
-- `agents/router-map.yaml`：路由 source of truth
-- `core/manifest.yaml`：打包契约
-- `scripts/designmd.mjs`：对 Google Labs `@google/design.md` 的包装
-- `scripts/validate_router.rb`：路由和文档结构校验入口
+- `skills/skill-index.yaml`
+- `agents/router-map.yaml`
+- `core/manifest.yaml`
+- `scripts/designmd.mjs`
+- `scripts/validate_router.rb`
 
 ## 重要说明
 
 这个包装脚本会优先使用本地或全局安装的 `designmd`，找不到时再回退到 `npx @google/design.md`。
 
-截至 2026-04-23，上游 Google Labs `DESIGN.md` 规范仍然处于 `alpha` 阶段。所以这里的定位是“已经能用，但上游规范还可能继续变”。
+截至 2026-04-23，上游 Google Labs `DESIGN.md` 规范仍然处于 `alpha` 阶段，所以建议你把它理解成“已经可以用，但后续还可能变化”。
