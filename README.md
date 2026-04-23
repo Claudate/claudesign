@@ -61,6 +61,99 @@ npx claudesign-plugin designmd spec --rules
 
 This is the fastest way to see what a supported structured design spec looks like.
 
+## How To Use It
+
+### Use case 1: install the bundle into a host
+
+If your goal is simply "make this bundle available to my AI host", do this:
+
+1. Install the default bundle:
+
+```bash
+npx claudesign-plugin install
+```
+
+2. Or install a host-specific adapter:
+
+```bash
+npx claudesign-plugin install --adapter claude
+npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
+```
+
+3. Point your host runtime at the installed bundle directory.
+
+Result: your host gets the same `skills`, `agents`, adapter metadata, and docs shipped by this repo.
+
+### Use case 2: understand the design-spec format before generating anything
+
+If your goal is "show me what format this project expects", do this:
+
+1. Print the `DESIGN.md` rules:
+
+```bash
+npx claudesign-plugin designmd spec --rules
+```
+
+2. Open the bundled baseline example:
+
+```bash
+sed -n '1,220p' ./skills/visual-style/DESIGN.md
+```
+
+3. Read the workflow guide:
+
+```bash
+sed -n '1,220p' ./docs/designmd-workflows.md
+```
+
+Result: you can see the supported spec shape, a real example, and the expected workflow in order.
+
+### Use case 3: validate or review a design spec
+
+If your goal is "check whether this design spec is usable", do this:
+
+1. Validate the built-in example:
+
+```bash
+node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
+```
+
+2. Replace that file path with your own `DESIGN.md` file if you want to validate a custom spec.
+
+3. If you are revising an existing spec, compare two versions:
+
+```bash
+node ./scripts/designmd.mjs diff \
+  ./docs/designmd-examples/taste-stitch-base.DESIGN.md \
+  ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
+```
+
+Result: you can check whether the file is structurally valid and what changed between revisions.
+
+### Use case 4: hand tokens to engineers or downstream tooling
+
+If your goal is "turn the design spec into something implementation-friendly", do this:
+
+1. Export Tailwind tokens:
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
+```
+
+2. Export DTCG tokens:
+
+```bash
+node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
+```
+
+3. Redirect the output to a file if needed:
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md > tailwind.theme.json
+```
+
+Result: downstream apps or engineers get machine-readable design tokens instead of prose only.
+
 ## The `DESIGN.md` Workflow
 
 `DESIGN.md` is a structured design spec file for coding agents. In this repo it is used for three practical jobs:

@@ -61,6 +61,99 @@ npx claudesign-plugin designmd spec --rules
 
 这是理解本仓库支持什么样的结构化设计规范文件的最快方式。
 
+## 具体怎么用
+
+### 使用场景 1：把 bundle 安装到宿主环境
+
+如果你的目标只是“把这套 bundle 装到 AI 宿主里”，按下面做：
+
+1. 安装默认 bundle：
+
+```bash
+npx claudesign-plugin install
+```
+
+2. 或者安装指定宿主适配版本：
+
+```bash
+npx claudesign-plugin install --adapter claude
+npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
+```
+
+3. 在你的宿主运行时里指向安装后的 bundle 目录。
+
+结果：宿主会拿到这个仓库分发的同一套 `skills`、`agents`、适配器元数据和文档。
+
+### 使用场景 2：先看懂设计规范格式，再决定怎么生成
+
+如果你的目标是“先看懂这个项目到底支持什么格式”，按下面做：
+
+1. 打印 `DESIGN.md` 规则：
+
+```bash
+npx claudesign-plugin designmd spec --rules
+```
+
+2. 打开仓库内置基线样例：
+
+```bash
+sed -n '1,220p' ./skills/visual-style/DESIGN.md
+```
+
+3. 再看工作流说明：
+
+```bash
+sed -n '1,220p' ./docs/designmd-workflows.md
+```
+
+结果：你会按顺序看到规范长什么样、真实样例长什么样、推荐工作流怎么走。
+
+### 使用场景 3：校验或审查一份设计规范
+
+如果你的目标是“检查这份设计规范能不能用”，按下面做：
+
+1. 先校验仓库内置样例：
+
+```bash
+node ./scripts/designmd.mjs lint ./skills/visual-style/DESIGN.md
+```
+
+2. 如果你要校验自己的文件，把这个路径替换成你自己的 `DESIGN.md` 文件路径。
+
+3. 如果你要比较两个版本之间的变化：
+
+```bash
+node ./scripts/designmd.mjs diff \
+  ./docs/designmd-examples/taste-stitch-base.DESIGN.md \
+  ./docs/designmd-examples/taste-stitch-variant.DESIGN.md
+```
+
+结果：你可以知道文件结构是否有效，以及两个版本之间具体改了什么。
+
+### 使用场景 4：把 token 交给工程侧或下游工具
+
+如果你的目标是“把设计规范变成工程更容易接的格式”，按下面做：
+
+1. 导出 Tailwind token：
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md
+```
+
+2. 导出 DTCG token：
+
+```bash
+node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
+```
+
+3. 如果你想保存成文件，可以直接重定向：
+
+```bash
+node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md > tailwind.theme.json
+```
+
+结果：工程师或下游系统拿到的是机器可读 token，而不只是说明文字。
+
 ## `DESIGN.md` 工作流
 
 `DESIGN.md` 是一种给 coding agents 使用的结构化设计规范文件。在这个仓库里，它主要承担三件事情：
