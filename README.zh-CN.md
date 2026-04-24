@@ -199,6 +199,12 @@ make designmd-export-dtcg
 - [DESIGN.md Workflows](docs/designmd-workflows.md)
 - [Execution Contract Notes](docs/derived-integration-note.md)
 
+## 微信群
+
+扫描下方二维码即可加入 `claudesign` 微信群：
+
+![claudesign 微信群二维码](public/wechat.png)
+
 ## 重要说明
 
 截至 2026-04-23，上游 Google Labs `DESIGN.md` 规范仍然处于 `alpha` 阶段。

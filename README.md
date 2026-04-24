@@ -199,6 +199,12 @@ make designmd-export-dtcg
 - [DESIGN.md Workflows](docs/designmd-workflows.md)
 - [Execution Contract Notes](docs/derived-integration-note.md)
 
+## WeChat Group
+
+Scan this QR code to join the `claudesign` WeChat group:
+
+![claudesign WeChat group QR code](public/wechat.png)
+
 ## Important Note
 
 As of 2026-04-23, the upstream Google Labs `DESIGN.md` format is still marked `alpha`.
