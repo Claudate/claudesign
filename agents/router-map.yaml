@@ -1,5 +1,5 @@
 version: 1
-last_updated: 2026-04-23
+last_updated: 2026-04-24
 curation_profile: curated-core-v1
 integration_profile: claudesign-core-v1
 fallback_policy:
@@ -134,6 +134,20 @@ intent_normalization:
           - 高保真 html
           - html 设计稿
           - 高保真设计稿
+      - canonical: anti-cliche web
+        aliases:
+          - anti cliche
+          - anti-generic
+          - premium web
+          - avoid ai look
+          - avoid ai vibe
+          - no ai vibe
+          - 避免ai味
+          - 避免 ai 味
+          - 去ai味
+          - 去 ai 味
+          - 避免ai感
+          - 不要ai味
     visual-style:
       - canonical: image-first
         aliases:
@@ -339,6 +353,7 @@ agents:
       - ux-adjacent
     route_priority: 60
     preferred_skills:
+      - web.web-design-engineer
       - web.interface-design-core
       - web.layout-hierarchy
       - web.state-spec
@@ -399,6 +414,29 @@ agents:
       - responsive
       - component state
       - landing page
+      - anti-cliche web
+      - premium web
+      - avoid ai look
+    priority_when_any_keywords_present:
+      - anti-cliche web
+      - premium web
+      - avoid ai look
+    priority_skill_overrides:
+      - skill: web.web-design-engineer
+        keywords:
+          - anti-cliche web
+          - anti cliche
+          - anti-generic
+          - premium web
+          - avoid ai look
+          - avoid ai vibe
+          - no ai vibe
+          - 避免ai味
+          - 避免 ai 味
+          - 去ai味
+          - 去 ai 味
+          - 避免ai感
+          - 不要ai味
     intent_match:
       synonym_group: web-ui
       min_keyword_hits: 1

@@ -93,6 +93,10 @@ node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
 ```text
 请根据以下项目背景，生成一份结构清晰、可用于开发协作的 DESIGN.md。
 
+角色设定：
+- 你是资深设计师，我是产品经理和最终决策者。
+- 你需要根据任务自动切换角色：动效任务=动效设计师，原型任务=UX 设计师，汇报任务=Deck 设计师，规范任务=Design System 设计师。
+
 项目类型：
 目标用户：
 品牌关键词：
@@ -118,6 +122,37 @@ node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
 - 不要只写营销形容词
 - 组件规则要能指导前端实现
 - 明确列出不建议出现的视觉问题
+- 工作流必须按六步输出：理解需求 -> 探索参考 -> 执行计划 -> 搭建结构与交互 -> 主动验证 -> 极简总结
+- 配色扩展优先使用 OKLCH，保证不同色相下亮度/饱和度观感一致
+- 在最终输出前，主动检查一遍内容与交互状态，明确指出至少 1 个潜在风险或假设
+```
+
+## 提示词模板：从 DESIGN.md 生成网站实现
+
+如果你已经有通过校验的 `DESIGN.md`，可以使用下面这个实现模板：
+
+```text
+根据下面的 DESIGN.md，生成可运行的网站实现代码。
+
+DESIGN.md 路径或内容：
+
+技术栈：
+- Framework (React/Vue/Vanilla)：
+- Styling (CSS Modules/Tailwind/plain CSS)：
+- Build tool：
+
+实现范围：
+- 需要实现的页面：
+- 需要实现的组件：
+- 必须覆盖的交互：
+- 响应式断点：
+
+输出要求：
+- 输出完整可运行代码，不要占位符，不要 TODO
+- 为交互组件补齐 loading/empty/error/focus/active 状态
+- 严格以 DESIGN.md 的 token 和规则为准（colors/type/spacing/radius/components/do-don't）
+- 保持规范中的层级和视觉节奏
+- 最后附一段简洁的验证清单
 ```
 
 ## 常见命令

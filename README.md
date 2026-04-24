@@ -6,6 +6,20 @@
 
 You can use AI to generate a first draft of `DESIGN.md`, review and refine it, validate it, compare revisions, and export design tokens for implementation.
 
+## Two Public Capabilities
+
+`claudesign` now exposes two user-facing capabilities:
+
+1. `Generate DESIGN.md`
+2. `Build Website from DESIGN.md`
+
+Use this command to inspect the capability contract quickly:
+
+```bash
+npx claudesign-plugin capability list
+npx claudesign-plugin capability contract
+```
+
 ## Start Here
 
 If you only want the simplest mental model:
@@ -134,7 +148,16 @@ node ./scripts/designmd.mjs export --format dtcg ./your.DESIGN.md
 ```bash
 npx claudesign-plugin install
 npx claudesign-plugin install --adapter claude
-npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
+  npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
+```
+
+### Capability helpers
+
+```bash
+npx claudesign-plugin capability list
+npx claudesign-plugin capability spec-template
+npx claudesign-plugin capability web-template
+npx claudesign-plugin capability contract
 ```
 
 ### Inspect the format
@@ -189,6 +212,10 @@ make designmd-lint
 make designmd-diff-sample
 make designmd-export-tailwind
 make designmd-export-dtcg
+make capability-list
+make capability-spec-template
+make capability-web-template
+make capability-contract
 ```
 
 ## Documentation
@@ -196,6 +223,7 @@ make designmd-export-dtcg
 - [Chinese README](README.zh-CN.md)
 - [English Usage Guide](docs/usage.en.md)
 - [中文使用说明](docs/usage.zh-CN.md)
+- [Dual-Capability Workflow](docs/capabilities-workflow.md)
 - [DESIGN.md Workflows](docs/designmd-workflows.md)
 - [Execution Contract Notes](docs/derived-integration-note.md)
 

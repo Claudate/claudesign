@@ -29,6 +29,10 @@
     "designmd:diff:sample": "node ./scripts/designmd.mjs diff ./docs/designmd-examples/taste-stitch-base.DESIGN.md ./docs/designmd-examples/taste-stitch-variant.DESIGN.md",
     "designmd:export:tailwind": "node ./scripts/designmd.mjs export --format tailwind ./skills/visual-style/DESIGN.md",
     "designmd:export:dtcg": "node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md",
+    "capability:list": "node ./scripts/capability.mjs list",
+    "capability:spec-template": "node ./scripts/capability.mjs spec-template",
+    "capability:web-template": "node ./scripts/capability.mjs web-template",
+    "capability:contract": "node ./scripts/capability.mjs contract",
     "install:generic": "node ./bin/claudesign-plugin.mjs install --adapter generic",
     "install:claude": "node ./bin/claudesign-plugin.mjs install --adapter claude",
     "install:openai": "node ./bin/claudesign-plugin.mjs install --adapter openai"

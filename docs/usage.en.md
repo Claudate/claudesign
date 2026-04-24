@@ -89,6 +89,10 @@ If you want AI to generate the first version for you, you can copy this prompt:
 ```text
 Generate a structured DESIGN.md for the following project.
 
+Role contract:
+- You are the expert designer; I am the product manager and final decision owner.
+- Switch role by task: motion tasks = motion designer, prototype tasks = UX designer, presentation tasks = deck designer, system tasks = design-system designer.
+
 Project type:
 Target users:
 Brand keywords:
@@ -114,6 +118,37 @@ Requirements:
 - Do not rely on vague marketing adjectives
 - Make component rules implementable
 - Explicitly call out visual patterns that should be avoided
+- Follow a six-step workflow: understand request -> explore references -> plan -> build structure/interactions -> validate -> minimal summary
+- Prefer OKLCH when expanding palettes so hue changes keep perceptual lightness/chroma consistency
+- Before final output, run a proactive error check and call out at least one risk or assumption
+```
+
+## Prompt Template: Build Website from DESIGN.md
+
+If you already have a validated `DESIGN.md`, you can use this prompt for implementation:
+
+```text
+Build an implementation-ready website from the DESIGN.md below.
+
+DESIGN.md path or content:
+
+Tech stack:
+- Framework (React/Vue/Vanilla):
+- Styling (CSS Modules/Tailwind/plain CSS):
+- Build tool:
+
+Scope:
+- Pages to implement:
+- Components to implement:
+- Required interactions:
+- Responsive breakpoints:
+
+Output requirements:
+- Produce complete runnable code, no placeholders and no TODO blocks
+- Implement loading/empty/error/focus/active states for interactive components
+- Follow DESIGN.md tokens and rules as source of truth (colors/type/spacing/radius/components/do-don't)
+- Keep hierarchy and visual rhythm consistent with the spec
+- Include a concise verification checklist at the end
 ```
 
 ## Common Commands

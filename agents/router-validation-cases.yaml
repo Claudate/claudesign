@@ -1,5 +1,5 @@
 version: 1
-last_updated: 2026-04-23
+last_updated: 2026-04-24
 
 routing_cases:
   - id: R1
@@ -50,6 +50,10 @@ routing_cases:
     prompt: 做建筑负荷计算并加一轮气候研究建议
     expected_agent: agent.comp-design
     expected_mode: analysis
+  - id: R18
+    prompt: 做一个 premium web landing page，避免AI味
+    expected_agent: agent.web-design
+    expected_mode: html-design
   - id: V1
     prompt: 这个项目请走 image-first，先生成页面参考图再实现
     expected_agent: agent.visual-style
@@ -140,6 +144,10 @@ execution_mode_cases:
     prompt: 基于场地朝向和气候条件给我做概念阶段分析
     expected_agent: agent.comp-design
     expected_mode: analysis
+  - id: H7
+    prompt: 这版官网要 anti-cliche，避免 AI 味，做成高保真网页
+    expected_agent: agent.web-design
+    expected_mode: html-design
   - id: VH1
     prompt: 这个视觉需求走 image first 工作流
     expected_agent: agent.visual-style

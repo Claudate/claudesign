@@ -6,12 +6,15 @@
 ## Purpose
 
 This repository now exposes `DESIGN.md` workflows as an optional-but-supported layer for `design-spec` outputs, especially `taste.stitch`.
+It also supports an optional style enhancement bridge for `web.web-design-engineer` without changing the default workflow.
 
 ## Sample Files
 
 - Base sample: `docs/designmd-examples/taste-stitch-base.DESIGN.md`
 - Variant sample: `docs/designmd-examples/taste-stitch-variant.DESIGN.md`
+- Anti-cliche sample: `docs/designmd-examples/anti-cliche-premium-web.DESIGN.md`
 - Skill baseline: `skills/visual-style/DESIGN.md`
+- Web design bridge: `docs/web-design-engineer-designmd-bridge.md`
 
 ## Local Commands
 
@@ -41,6 +44,14 @@ Export the baseline to DTCG:
 node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
 ```
 
+Run lint/diff/export on the anti-cliche sample:
+
+```bash
+node ./scripts/designmd.mjs lint ./docs/designmd-examples/anti-cliche-premium-web.DESIGN.md
+node ./scripts/designmd.mjs diff ./docs/designmd-examples/taste-stitch-base.DESIGN.md ./docs/designmd-examples/anti-cliche-premium-web.DESIGN.md
+node ./scripts/designmd.mjs export --format tailwind ./docs/designmd-examples/anti-cliche-premium-web.DESIGN.md
+```
+
 ## Expected Medium-Integration Usage
 
 1. Route a request into `agent.visual-style` with `design-spec`.
@@ -48,6 +59,12 @@ node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
 3. Run `lint` before handing the artifact to downstream implementation.
 4. Run `diff` when revising an existing design system.
 5. Run `export` when a downstream runtime needs machine-readable tokens.
+
+Optional bridge path for web anti-cliche style uplift:
+
+1. Activate `web.web-design-engineer` for style intent and guardrails.
+2. Serialize those constraints into `DESIGN.md` using the bridge mapping doc.
+3. Keep `DESIGN.md` as source of truth and continue with `lint/diff/export`.
 
 ## Notes
 

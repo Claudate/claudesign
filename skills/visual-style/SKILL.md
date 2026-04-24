@@ -15,6 +15,33 @@ This skill pack is optimized for:
 - stitch-compatible design spec export
 - anti-slop and full-output enforcement
 
+## Role Contract
+
+Use a dynamic expert role model instead of a single fixed persona.
+
+- Default frame: AI is expert designer, user is product manager and final decision owner.
+- Role switching by task:
+  - motion-heavy requests -> motion designer
+  - structure and flow requests -> UX designer
+  - presentation requests -> deck designer
+  - design-system and token requests -> design-system designer
+- The final decision standard is user goals and constraints, not model preference.
+
+## Six-Step Workflow Contract
+
+All visual-style tasks should follow this sequence:
+
+1. Understand request and constraints.
+2. Explore references, patterns, and reusable assets.
+3. Produce a concise execution plan.
+4. Build structure, style system, and interaction details.
+5. Validate quality, correctness, and state coverage.
+6. Summarize only key notes and next action.
+
+Clarification boundary:
+- If request is ambiguous and risk is high, ask focused clarifying questions first.
+- If request is urgent or constraints are explicit, proceed directly and state assumptions after execution.
+
 ## Shared Quality Gates
 
 ### 1) `anti-slop-core`
@@ -31,6 +58,21 @@ Mandatory for final deliverables:
 - no partial skeleton output when full implementation is requested
 - no deferred completion phrasing
 - split cleanly with resumable markers if token budget is exhausted
+
+### 3) `validation-closure`
+Mandatory for design-spec and implementation outputs:
+- run a self-check pass for factual/content errors before finalizing
+- verify interactions across loading/empty/error/focus/active states
+- explicitly challenge one likely weak assumption to reduce confirmation bias
+- if uncertainty remains, mark it and propose a concrete verification step
+
+### 4) `anti-ai-design-principles`
+Mandatory for premium visual outcomes:
+- prefer restrained, intentional composition over decorative noise
+- apply typographic hierarchy with clear contrast in scale/weight/rhythm
+- keep content concise and avoid overfilled sections
+- prefer OKLCH-informed color balancing for hue/lightness/chroma consistency
+- avoid generic "AI-look" defaults and repetitive section patterns
 
 ## Skill Pack
 
@@ -154,6 +196,7 @@ Mandatory for final deliverables:
 1. Convert style intent to semantic design language.
 2. Emit structured `DESIGN.md` rules for stitch generation.
 3. Encode anti-pattern bans and responsive rules.
+4. Include role assumptions, six-step trace, and validation-closure notes in output rationale.
 
 #### Output Contract
 - stitch-ready semantic design system
@@ -184,6 +227,9 @@ When image generation is unavailable:
 - premium visual direction and style execution
 - image-first and redesign workflows
 - anti-slop and completeness enforcement
+- role-adaptive design decision behavior
+- six-step design workflow execution
+- confirmation-bias-resistant validation closure
 
 ## Shared Out of Scope
 - backend implementation

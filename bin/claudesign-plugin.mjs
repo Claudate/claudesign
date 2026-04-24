@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const installScript = path.join(repoRoot, "install.sh");
 const designmdScript = path.join(repoRoot, "scripts", "designmd.mjs");
+const capabilityScript = path.join(repoRoot, "scripts", "capability.mjs");
 const supportedAdapters = ["generic", "claude", "openai"];
 
 function printHelp() {
@@ -20,6 +21,7 @@ Usage:
   npx claudesign-plugin list
   npx claudesign-plugin install [--adapter <generic|claude|openai>] [--platform <generic|claude|openai>] [--target <dir>]
   npx claudesign-plugin designmd <lint|diff|export|spec> [args...]
+  npx claudesign-plugin capability <list|spec-template|web-template|contract>
   npx claudesign-plugin help
 
 Examples:
@@ -29,6 +31,7 @@ Examples:
   npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
   npx claudesign-plugin install --platform claude
   npx claudesign-plugin designmd lint ./skills/visual-style/DESIGN.md
+  npx claudesign-plugin capability list
 `);
 }
 
@@ -42,7 +45,7 @@ function expandHome(inputPath) {
 function parseArgs(argv) {
   const [first = "help", ...rest] = argv;
   const command = first === "--help" || first === "-h" ? "help" : first;
-  if (command === "designmd") {
+  if (command === "designmd" || command === "capability") {
     return { command, options: {}, passthrough: rest };
   }
 
@@ -115,6 +118,21 @@ function runDesignmd(args) {
   }
 }
 
+function runCapability(args) {
+  if (!existsSync(capabilityScript)) {
+    throw new Error("scripts/capability.mjs is missing from the package.");
+  }
+
+  try {
+    execFileSync("node", [capabilityScript, ...args], {
+      cwd: repoRoot,
+      stdio: "inherit"
+    });
+  } catch (error) {
+    process.exit(error.status ?? 1);
+  }
+}
+
 function main() {
   let parsed;
 
@@ -146,6 +164,11 @@ function main() {
 
   if (command === "designmd") {
     runDesignmd(passthrough);
+    return;
+  }
+
+  if (command === "capability") {
+    runCapability(passthrough);
     return;
   }
 

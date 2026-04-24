@@ -46,6 +46,17 @@ def includes_any?(text, phrases)
   phrases.any? { |phrase| text.include?(normalize(phrase)) }
 end
 
+def priority_skill_override(agent, expanded_prompt)
+  overrides = agent.fetch("priority_skill_overrides", [])
+
+  overrides.each do |rule|
+    keywords = rule.fetch("keywords", [])
+    return rule.fetch("skill") if includes_any?(expanded_prompt, keywords)
+  end
+
+  nil
+end
+
 def skill_execution_mode(skill)
   skill["execution_mode"]
 end
@@ -178,12 +189,18 @@ def route_prompt(prompt, router_map, skills_by_id)
     next if keyword_hits < agent.fetch("intent_match").fetch("min_keyword_hits")
 
     preferred_skills = agent.fetch("preferred_skills")
-    best_skill = preferred_skills.max_by do |skill_id|
-      [
-        score_skill(skill_id, expanded),
-        skills_by_id.fetch(skill_id).fetch("curation_tier") == "core" ? 1 : 0
-      ]
-    end
+    forced_skill = priority_skill_override(agent, expanded)
+    best_skill =
+      if forced_skill && preferred_skills.include?(forced_skill)
+        forced_skill
+      else
+        preferred_skills.max_by do |skill_id|
+          [
+            score_skill(skill_id, expanded),
+            skills_by_id.fetch(skill_id).fetch("curation_tier") == "core" ? 1 : 0
+          ]
+        end
+      end
     best_skill_score = score_skill(best_skill, expanded)
     chosen_mode = infer_mode(
       prompt,
@@ -263,6 +280,18 @@ def validate_structure(router_map, skills_by_id)
       end
 
       errors << "Curated skill #{skill_id} is not core tier" unless skill.fetch("curation_tier") == "core"
+    end
+
+    agent.fetch("priority_skill_overrides", []).each do |rule|
+      override_skill = rule.fetch("skill")
+
+      unless skills_by_id.key?(override_skill)
+        errors << "Agent #{agent.fetch("id")} priority override references missing skill #{override_skill}"
+      end
+
+      unless agent.fetch("preferred_skills").include?(override_skill)
+        errors << "Agent #{agent.fetch("id")} priority override skill #{override_skill} must exist in preferred_skills"
+      end
     end
 
     errors << "Agent #{agent.fetch("id")} is missing default_execution_mode" unless agent_default_execution_mode(agent)

@@ -1,4 +1,4 @@
-.PHONY: validate-router designmd-lint designmd-spec designmd-diff-sample designmd-export-tailwind designmd-export-dtcg package-generic package-claude package-openai list-adapters
+.PHONY: validate-router designmd-lint designmd-spec designmd-diff-sample designmd-export-tailwind designmd-export-dtcg capability-list capability-spec-template capability-web-template capability-contract package-generic package-claude package-openai list-adapters
 
 validate-router:
 	ruby scripts/validate_router.rb
@@ -17,6 +17,18 @@ designmd-export-tailwind:
 
 designmd-export-dtcg:
 	node ./scripts/designmd.mjs export --format dtcg ./skills/visual-style/DESIGN.md
+
+capability-list:
+	node ./scripts/capability.mjs list
+
+capability-spec-template:
+	node ./scripts/capability.mjs spec-template
+
+capability-web-template:
+	node ./scripts/capability.mjs web-template
+
+capability-contract:
+	node ./scripts/capability.mjs contract
 
 package-generic:
 	sh install.sh generic

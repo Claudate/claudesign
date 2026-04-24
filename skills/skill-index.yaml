@@ -1,6 +1,6 @@
 version: 1
 owner: dbi007
-last_updated: 2026-04-23
+last_updated: 2026-04-24
 integration_profile: claudesign-core-v1
 
 categories:
@@ -102,6 +102,36 @@ skills:
       - breakpoint behavior matrix for developer handoff
     out_of_scope:
       - automated test framework implementation
+
+  - id: web.web-design-engineer
+    name: Web Design Engineer
+    category: web-ui
+    source_repo: https://github.com/ConardLi/web-design-skill
+    retention_mode: keep
+    status: curated-v1
+    type: executable
+    execution_mode: html-design
+    execution_bridge_status: bridge-ready
+    curation_tier: support
+    canonical_id: web.interface-design-core
+    style_profile: anti-cliche-web
+    workflow_policy:
+      design_system_before_code: required
+      v0_prototype_first: required
+      anti_cliche_guardrails: required
+      designmd_bridge: optional
+    agent_entrypoints:
+      - agent.web-design
+      - agent.visual-style
+    last_reviewed: 2026-04-24
+    review_cycle: monthly
+    in_scope:
+      - anti-cliche web visual direction for frontend delivery
+      - structured design-system-first page implementation
+      - optional bridge into DESIGN.md workflows
+    out_of_scope:
+      - replacing the default DESIGN.md-first workflow
+      - backend and deployment implementation
 
   - id: taste.taste-core
     name: Taste Core

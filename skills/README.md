@@ -11,6 +11,7 @@ This directory stores the `claudesign` design skill catalog and its portable exe
 - `skill-index.yaml`: canonical index for all curated skills.
 - `_templates/SKILL.template.md`: template for creating or normalizing a skill file.
 - `web-ui/`: web and UI design skills.
+- `web-design-engineer/`: optional anti-cliche web design execution layer.
 - `visual-style/`: taste-style art direction, image-first, redesign, and output enforcement skills.
 - `design-system/`: visual language and design system skills.
 - `ux-adjacent/`: UX research, accessibility, responsive, IA.

@@ -6,6 +6,20 @@
 
 你可以先让 AI 生成一版 `DESIGN.md`，再人工修改、校验、对比版本，最后导出 token 给前端开发。
 
+## 两个对外能力
+
+`claudesign` 现在明确对外提供两块能力：
+
+1. `Generate DESIGN.md`
+2. `Build Website from DESIGN.md`
+
+你可以先用下面命令查看能力清单和桥接契约：
+
+```bash
+npx claudesign-plugin capability list
+npx claudesign-plugin capability contract
+```
+
 ## 先看这个
 
 如果你只想用最简单的话理解这个项目，可以这样记：
@@ -137,6 +151,15 @@ npx claudesign-plugin install --adapter claude
 npx claudesign-plugin install --adapter openai --target ~/.claudesign/plugins/openai
 ```
 
+### 能力模板与契约
+
+```bash
+npx claudesign-plugin capability list
+npx claudesign-plugin capability spec-template
+npx claudesign-plugin capability web-template
+npx claudesign-plugin capability contract
+```
+
 ### 查看格式规则
 
 ```bash
@@ -189,6 +212,10 @@ make designmd-lint
 make designmd-diff-sample
 make designmd-export-tailwind
 make designmd-export-dtcg
+make capability-list
+make capability-spec-template
+make capability-web-template
+make capability-contract
 ```
 
 ## 文档入口
@@ -196,6 +223,7 @@ make designmd-export-dtcg
 - [English README](README.md)
 - [English Usage Guide](docs/usage.en.md)
 - [中文使用说明](docs/usage.zh-CN.md)
+- [Dual-Capability Workflow](docs/capabilities-workflow.md)
 - [DESIGN.md Workflows](docs/designmd-workflows.md)
 - [Execution Contract Notes](docs/derived-integration-note.md)
 
