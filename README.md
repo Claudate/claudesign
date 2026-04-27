@@ -227,6 +227,18 @@ make capability-contract
 - [DESIGN.md Workflows](docs/designmd-workflows.md)
 - [Execution Contract Notes](docs/derived-integration-note.md)
 
+## Design Mockups
+
+The following images are design mockups for visual preview:
+
+![Design mockup 1](public/1.png)
+![Design mockup 2](public/2.png)
+![Design mockup 3](public/3.png)
+![Design mockup 4](public/4.png)
+![Design mockup 5](public/5.png)
+![Design mockup 6](public/6.png)
+![Design mockup 7](public/7.png)
+
 ## WeChat Group
 
 Scan this QR code to join the `claudesign` WeChat group:

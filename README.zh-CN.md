@@ -227,6 +227,18 @@ make capability-contract
 - [DESIGN.md Workflows](docs/designmd-workflows.md)
 - [Execution Contract Notes](docs/derived-integration-note.md)
 
+## 设计效果图
+
+以下图片为本项目的设计效果图展示：
+
+![设计效果图 1](public/1.png)
+![设计效果图 2](public/2.png)
+![设计效果图 3](public/3.png)
+![设计效果图 4](public/4.png)
+![设计效果图 5](public/5.png)
+![设计效果图 6](public/6.png)
+![设计效果图 7](public/7.png)
+
 ## 微信群
 
 扫描下方二维码即可加入 `claudesign` 微信群：
